@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
 void main() {
-  runApp( MyApp());
+  runApp(MaterialApp(title: 'CPU Simulator',home: MyApp(),) );
 }
 
 class MyApp extends StatelessWidget {
