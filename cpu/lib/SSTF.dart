@@ -11,6 +11,9 @@ class SSTF extends StatefulWidget {
 class _SSTFState extends State<SSTF> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      appBar: AppBar(title: Text('SSTF',style: TextStyle(fontFamily: 'Pacifico',fontWeight: FontWeight.bold),),),
+      body: Container(),
+    );
   }
 }

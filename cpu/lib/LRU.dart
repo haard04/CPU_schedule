@@ -10,6 +10,9 @@ class LRU extends StatefulWidget {
 class _LRUState extends State<LRU> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      appBar: AppBar(title: Text('LRU',style: TextStyle(fontFamily: 'Pacifico',fontWeight: FontWeight.bold),),),
+      body: Container(),
+    );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:cpu/Home.dart';
+import 'package:cpu/SRTNIO.dart';
 import 'package:flutter/material.dart';
 
 class SRTN extends StatefulWidget {
@@ -150,7 +151,7 @@ void _Gant() {
                         // Navigator.of(context).push(FCFSIOBT());
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => Home()),//TBU
+                          MaterialPageRoute(builder: (context) => SRTNIO()),//TBU
                         );
                       }),
                   alignment: Alignment.topRight,
