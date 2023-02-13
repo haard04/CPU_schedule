@@ -188,7 +188,7 @@ void _viz() {
             height: 30,
             child: Text(
               '0',
-              style: TextStyle(color: Colors.white, fontSize: 25),
+              style: TextStyle(color: Colors.black, fontSize: 25),
             ),
           ),
         ],
@@ -205,7 +205,7 @@ void _viz() {
             height: 30,
             child: Text(
               j.toString(),
-              style: TextStyle(color: Colors.white, fontSize: 25),
+              style: TextStyle(color: Colors.black, fontSize: 25),
             ),
           ),
         );
@@ -224,7 +224,7 @@ void _viz() {
               child: Center(
                 child: Text(
                   temp,
-                  style: TextStyle(color: Colors.white, fontSize: 25),
+                  style: TextStyle(color: Colors.black, fontSize: 25),
                 ),
               ),
             ),
@@ -239,7 +239,7 @@ void _viz() {
             child: Center(
               child: Text(
                 temp,
-                style: TextStyle(color: Colors.white, fontSize: 25),
+                style: TextStyle(color: Colors.black, fontSize: 25),
               ),
             ),
           ),
