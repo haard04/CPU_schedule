@@ -14,7 +14,7 @@ class SRTN extends StatefulWidget {
 }
 
 class _SRTNState extends State<SRTN> {
-
+//Change the logic
 var _counter = 0;
   double _avg_tat = 0, _avg_wt = 0;
 
