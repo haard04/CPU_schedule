@@ -5,6 +5,7 @@ import 'package:cpu/SRTNIO.dart';
 import 'package:cpu/card.dart';
 import 'package:cpu/view.dart';
 import 'package:flutter/material.dart';
+import 'dart:collection';
 
 class SRTN extends StatefulWidget {
   SRTN({Key? key}) : super(key: key);
@@ -15,10 +16,10 @@ class SRTN extends StatefulWidget {
 
 class _SRTNState extends State<SRTN> {
 //Change the logic
-var _counter = 0;
+  var _counter = 0;
   double _avg_tat = 0, _avg_wt = 0;
 
- List<DataRow> _rowList = [];
+  List<DataRow> _rowList = [];
   List<List<int>> _data = [];
   List<List<String>> _datas = [];
   List<List<int>> _cardv = [];
@@ -27,8 +28,7 @@ var _counter = 0;
   List<String> _Na = [], _Re = [], _Ru = [], _Te = [];
   List<List<Widget>> _disdata = [], _disNum = [];
 
-
-void _addrow() {
+  void _addrow() {
     setState(() {
       var t = _counter;
       _counter++;
@@ -71,8 +71,8 @@ void _addrow() {
       ]));
     });
   }
- 
-void _RemoveRow() {
+
+  void _RemoveRow() {
     setState(() {
       _counter--;
       _rowList.removeLast();
@@ -82,7 +82,7 @@ void _RemoveRow() {
     });
   }
 
-void _Gant() {
+  void _Gant() {
     int cal = 0, st = 0, _tt = 0;
     _cardv.clear();
     _cardvs.clear();
@@ -126,7 +126,7 @@ void _Gant() {
     }
   }
 
-void _viz() {
+  void _viz() {
     int fct = 0;
     for (int i = 0; i < _counter; ++i) {
       fct = max(fct, _data[i][2]);
@@ -188,7 +188,7 @@ void _viz() {
             height: 30,
             child: Text(
               '0',
-              style: TextStyle(color: Colors.black, fontSize: 25),
+              style: TextStyle(color: Colors.white, fontSize: 25),
             ),
           ),
         ],
@@ -205,7 +205,7 @@ void _viz() {
             height: 30,
             child: Text(
               j.toString(),
-              style: TextStyle(color: Colors.black, fontSize: 25),
+              style: TextStyle(color: Colors.white, fontSize: 25),
             ),
           ),
         );
@@ -224,7 +224,7 @@ void _viz() {
               child: Center(
                 child: Text(
                   temp,
-                  style: TextStyle(color: Colors.black, fontSize: 25),
+                  style: TextStyle(color: Colors.white, fontSize: 25),
                 ),
               ),
             ),
@@ -239,7 +239,7 @@ void _viz() {
             child: Center(
               child: Text(
                 temp,
-                style: TextStyle(color: Colors.black, fontSize: 25),
+                style: TextStyle(color: Colors.white, fontSize: 25),
               ),
             ),
           ),
@@ -284,7 +284,7 @@ void _viz() {
       MaterialPageRoute(builder: (context) => view()),
     );
   }
-
+  
 void _calculate() {
     int cal = 0, st = 0, _t = 0;
     List<bool> vis;
@@ -361,13 +361,20 @@ void _calculate() {
     }
     for (int i = 0; i < _counter; ++i) _data[i][1] = val[i];
   }
-
-  @override
+  
+  
+    @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('SRTN',style: TextStyle(fontFamily: 'Pacifico',fontWeight: FontWeight.bold),),),
-      body: Container(
-        width: double.infinity,
+        appBar: AppBar(
+          title: Text(
+            'SRTN',
+            style:
+                TextStyle(fontFamily: 'Pacifico', fontWeight: FontWeight.bold),
+          ),
+        ),
+        body: Container(
+          width: double.infinity,
           child: ListView(
             children: <Widget>[
               Padding(
@@ -389,7 +396,8 @@ void _calculate() {
                         // Navigator.of(context).push(FCFSIOBT());
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => SRTNIO()),//TBU
+                          MaterialPageRoute(
+                              builder: (context) => SRTNIO()), //TBU
                         );
                       }),
                   alignment: Alignment.topRight,
@@ -439,35 +447,31 @@ void _calculate() {
                   Align(
                     alignment: Alignment.bottomLeft,
                     child: (ElevatedButton(
-                      onPressed:         //TBU
-                      _addrow,
-                      
-                      
+                      onPressed: //TBU
+                          _addrow,
                       child: Text(
                         'Add Process',
-                        style: TextStyle(color: Colors.black),
+                        style: TextStyle(color: Colors.white),
                       ),
                     )),
                   ),
                   Align(
                     alignment: Alignment.bottomCenter,
                     child: Builder(
-                      builder: (context)=> (ElevatedButton
-                        ( 
+                      builder: (context) => (ElevatedButton(
                         child: Text(
                           'Delete Process',
                           style: TextStyle(color: Colors.white),
                         ),
-                        onPressed: (){
+                        onPressed: () {
                           _RemoveRow();
                           // Scaffold.of(context).showSnackBar(
                           //     SnackBar(
                           //       content: Text('Row Deleted'),
                           //     )
-                         //);
+                          //);
                         },
-                      )
-                      ),
+                      )),
                     ),
                   ),
                 ],
@@ -481,12 +485,12 @@ void _calculate() {
                   Align(
                     alignment: Alignment.bottomCenter,
                     child: (ElevatedButton(
-                      
                       child: Text(
                         'Gantt Chart',
                         style: TextStyle(color: Colors.white),
                       ),
                       onPressed: () {
+                       // _calculate();
                         _Gant();
                         Navigator.push(
                             context,
@@ -499,17 +503,16 @@ void _calculate() {
                   Align(
                     alignment: Alignment.bottomCenter,
                     child: (ElevatedButton(
-                     
                       child: Text(
                         'Visulization',
-                        style: TextStyle(color: Colors.black),
+                        style: TextStyle(color: Colors.white),
                       ),
-                      onPressed:  
-                      _viz,
+                      onPressed: _viz,
                     )),
                   ),
                 ],
               ),
+              
               Padding(
                 padding: EdgeInsets.all(10),
               ),
@@ -523,9 +526,7 @@ void _calculate() {
                       borderRadius: BorderRadius.all(Radius.circular(15)),
                     ),
                     padding: EdgeInsets.all(10),
-                    child: Text('AVg. TAT = ' 
-                    + _avg_tat.toStringAsFixed(2)
-                   ,
+                    child: Text('AVg. TAT = ' + _avg_tat.toStringAsFixed(2),
                         style: TextStyle(color: Colors.black)),
                   ),
                   Container(
@@ -536,8 +537,7 @@ void _calculate() {
                     ),
                     padding: EdgeInsets.all(10),
                     //padding: EdgeInsets.fromLTRB(100, 25, 0, 0),
-                    child: Text('AVg. WT = ' 
-                    + _avg_wt.toStringAsFixed(2),
+                    child: Text('AVg. WT = ' + _avg_wt.toStringAsFixed(2),
                         style: TextStyle(color: Colors.black)),
                   ),
                 ],
@@ -547,4 +547,4 @@ void _calculate() {
           ),
         ));
   }
-  }
+}
