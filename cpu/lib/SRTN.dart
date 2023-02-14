@@ -188,7 +188,7 @@ class _SRTNState extends State<SRTN> {
             height: 30,
             child: Text(
               '0',
-              style: TextStyle(color: Colors.black, fontSize: 25),
+              style: TextStyle(color: Colors.white, fontSize: 25),
             ),
           ),
         ],
@@ -205,7 +205,7 @@ class _SRTNState extends State<SRTN> {
             height: 30,
             child: Text(
               j.toString(),
-              style: TextStyle(color: Colors.black, fontSize: 25),
+              style: TextStyle(color: Colors.white, fontSize: 25),
             ),
           ),
         );
@@ -224,7 +224,7 @@ class _SRTNState extends State<SRTN> {
               child: Center(
                 child: Text(
                   temp,
-                  style: TextStyle(color: Colors.black, fontSize: 25),
+                  style: TextStyle(color: Colors.white, fontSize: 25),
                 ),
               ),
             ),
@@ -239,7 +239,7 @@ class _SRTNState extends State<SRTN> {
             child: Center(
               child: Text(
                 temp,
-                style: TextStyle(color: Colors.black, fontSize: 25),
+                style: TextStyle(color: Colors.white, fontSize: 25),
               ),
             ),
           ),
@@ -284,17 +284,19 @@ class _SRTNState extends State<SRTN> {
       MaterialPageRoute(builder: (context) => view()),
     );
   }
-  void _calculate() {
+  
+void _calculate() {
     int cal = 0, st = 0, _t = 0;
     List<bool> vis;
     List<int> val;
     vis = new List<bool>.filled(_counter, false);
     val = new List<int>.filled(_counter, 0);
+    for (int i = 0; i < _counter; ++i) val[i] = _data[i][1];
     while (cal != _counter) {
       var mn = 100, loc = 0;
       bool f = true;
       for (var i = 0; i < _counter; ++i) {
-        if (_data[i][1] < mn && !vis[i] && _data[i][1] > 0) {
+        if (_data[i][1] < mn && !vis[i] && st >= _data[i][0]) {
           mn = _data[i][1];
           loc = i;
           f = false;
@@ -304,8 +306,10 @@ class _SRTNState extends State<SRTN> {
         st++;
         continue;
       }
-      _data[loc][1]--;
-      st++;
+      if (_data[loc][1] > 0) {
+        st++;
+        _data[loc][1]--;
+      }
       if (_data[loc][1] == 0) {
         vis[loc] = true;
         cal++;
@@ -357,8 +361,9 @@ class _SRTNState extends State<SRTN> {
     }
     for (int i = 0; i < _counter; ++i) _data[i][1] = val[i];
   }
-
-  @override
+  
+  
+    @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
@@ -446,7 +451,7 @@ class _SRTNState extends State<SRTN> {
                           _addrow,
                       child: Text(
                         'Add Process',
-                        style: TextStyle(color: Colors.black),
+                        style: TextStyle(color: Colors.white),
                       ),
                     )),
                   ),
@@ -485,6 +490,7 @@ class _SRTNState extends State<SRTN> {
                         style: TextStyle(color: Colors.white),
                       ),
                       onPressed: () {
+                       // _calculate();
                         _Gant();
                         Navigator.push(
                             context,
@@ -499,13 +505,14 @@ class _SRTNState extends State<SRTN> {
                     child: (ElevatedButton(
                       child: Text(
                         'Visulization',
-                        style: TextStyle(color: Colors.black),
+                        style: TextStyle(color: Colors.white),
                       ),
                       onPressed: _viz,
                     )),
                   ),
                 ],
               ),
+              
               Padding(
                 padding: EdgeInsets.all(10),
               ),
