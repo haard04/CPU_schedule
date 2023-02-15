@@ -28,6 +28,17 @@ class _SRTNState extends State<SRTN> {
   List<String> _Na = [], _Re = [], _Ru = [], _Te = [];
   List<List<Widget>> _disdata = [], _disNum = [];
 
+void savedata(){
+  double tat,wt;
+  List<List<String>> process=[];
+  tat=_avg_tat.toDouble();
+  wt=_avg_wt.toDouble();
+
+  print(_datas);
+  print(tat);
+  print(wt);
+}
+
   void _addrow() {
     setState(() {
       var t = _counter;
