@@ -296,7 +296,7 @@ void savedata(){
   }
   
 void _calculate() {
-    int cal = 0, st = 0, _t = 0;
+    int cal = 0, st = 0;
     List<bool> vis;
     List<int> val;
     vis = new List<bool>.filled(_counter, false);
