@@ -106,7 +106,7 @@ class _SRTNIOState extends State<SRTNIO> {
             height: 30,
             child: Text(
               '0',
-              style: TextStyle(color: Colors.black, fontSize: 25),
+              style: TextStyle(color: Colors.white, fontSize: 25),
             ),
           ),
         ],
@@ -123,7 +123,7 @@ class _SRTNIOState extends State<SRTNIO> {
             height: 30,
             child: Text(
               j.toString(),
-              style: TextStyle(color: Colors.black, fontSize: 25),
+              style: TextStyle(color: Colors.white, fontSize: 25),
             ),
           ),
         );
@@ -142,7 +142,7 @@ class _SRTNIOState extends State<SRTNIO> {
               child: Center(
                 child: Text(
                   temp,
-                  style: TextStyle(color: Colors.black, fontSize: 25),
+                  style: TextStyle(color: Colors.white, fontSize: 25),
                 ),
               ),
             ),
@@ -157,7 +157,7 @@ class _SRTNIOState extends State<SRTNIO> {
             child: Center(
               child: Text(
                 temp,
-                style: TextStyle(color: Colors.black, fontSize: 25),
+                style: TextStyle(color: Colors.white, fontSize: 25),
               ),
             ),
           ),

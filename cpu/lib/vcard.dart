@@ -42,10 +42,10 @@ class customExpansionTilestate extends State {
     return ExpansionTile(
       trailing: isExpanded
           ? Icon(
-        FontAwesomeIcons.chevronCircleUp,
+        FontAwesomeIcons.circleChevronUp,
         color: Colors.black,
       )
-          : Icon(FontAwesomeIcons.chevronCircleDown),
+          : Icon(FontAwesomeIcons.circleChevronDown),
       title: Column(
         children: <Widget>[
           Row(
