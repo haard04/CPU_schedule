@@ -1,8 +1,11 @@
 import 'package:cpu/Home.dart';
+import 'package:cpu/mongo/mongoDB.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
-void main() {
+Future<void> main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await MongoDatabase.connect();
   runApp(MaterialApp(title: 'CPU Simulator',home: MyApp(),) );
 }
 
