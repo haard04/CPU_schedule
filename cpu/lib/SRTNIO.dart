@@ -6,7 +6,7 @@ import './SRTN.dart';
 import './Card.dart';
 import './Viewiobt.dart';
 
-//FCFS page stateful class
+
 class SRTNIO extends StatefulWidget {
   @override
   _SRTNIOState createState() => _SRTNIOState();
