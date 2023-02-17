@@ -1,18 +1,20 @@
 import 'dart:math';
 
+import 'package:cpu/Home.dart';
+import 'package:cpu/SRTN/SRTNIO.dart';
+import 'package:cpu/SRTN/card.dart';
+import 'package:cpu/SRTN/view.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import './SRTN.dart';
-import './Card.dart';
-import './Viewiobt.dart';
+import 'dart:collection';
 
+class SRTN extends StatefulWidget {
+  SRTN({Key? key}) : super(key: key);
 
-class SRTNIO extends StatefulWidget {
   @override
-  _SRTNIOState createState() => _SRTNIOState();
+  State<SRTN> createState() => _SRTNState();
 }
 
-class _SRTNIOState extends State<SRTNIO> {
+class _SRTNState extends State<SRTN> {
   var _counter = 0;
   double _avg_tat = 0, _avg_wt = 0;
 
@@ -22,37 +24,138 @@ class _SRTNIOState extends State<SRTNIO> {
   List<List<int>> _cardv = [];
   List<List<String>> _cardvs = [];
   List<List<bool>> _readyq = [];
-  List<String> _Na = [], _Re = [], _Ru = [], _Te = [], _Io = [];
+  List<String> _Na = [], _Re = [], _Ru = [], _Te = [];
   List<List<Widget>> _disdata = [], _disNum = [];
+
+void savedata(){
+  double tat,wt;
+  List<List<String>> process=[];
+  tat=_avg_tat.toDouble();
+  wt=_avg_wt.toDouble();
+
+  print(_datas);
+  print(tat);
+  print(wt);
+}
+
+  void _addrow() {
+    setState(() {
+      var t = _counter;
+      _counter++;
+      _data.add([0, 0, 0, 0, 0]);
+
+      _datas.add(['0', '0', '0', '0', '0']);
+
+      _rowList.add(DataRow(cells: <DataCell>[
+        DataCell(Text('P' + (_counter - 1).toString(),
+            style: TextStyle(color: Colors.black))),
+        DataCell(TextField(
+          maxLines: 1,
+          textAlign: TextAlign.center,
+          keyboardType: TextInputType.number,
+          style: TextStyle(color: Colors.black),
+          onChanged: (val) {
+            setState(() {
+              _datas[t][0] = val;
+              _data[t][0] = int.parse(val);
+              _calculate();
+            });
+          },
+        )),
+        DataCell(TextField(
+          maxLines: 1,
+          textAlign: TextAlign.center,
+          keyboardType: TextInputType.number,
+          style: TextStyle(color: Colors.black),
+          onChanged: (val) {
+            _datas[t][1] = val;
+            _data[t][1] = int.parse(val);
+            setState(() {
+              _calculate();
+            });
+          },
+        )),
+        DataCell(Text(_datas[t][2], style: TextStyle(color: Colors.black))),
+        DataCell(Text(_datas[t][3], style: TextStyle(color: Colors.black))),
+        DataCell(Text(_datas[t][4], style: TextStyle(color: Colors.black))),
+      ]));
+    });
+  }
+
+  void _RemoveRow() {
+    setState(() {
+      _counter--;
+      _rowList.removeLast();
+      _data.removeLast();
+      _datas.removeLast();
+      _calculate();
+    });
+  }
+
+  void _Gant() {
+    int cal = 0, st = 0, _tt = 0;
+    _cardv.clear();
+    _cardvs.clear();
+    _readyq.clear();
+    List<bool> vis;
+    vis = new List<bool>.filled(_counter, false);
+    while (cal != _counter) {
+      _readyq.add(List.filled(_counter, false));
+      var mn = 100, loc = 0;
+      bool f = true;
+      for (var i = 0; i < _counter; ++i) {
+        if (_data[i][1] < mn && !vis[i] && st >= _data[i][0]) {
+          mn = _data[i][1];
+          loc = i;
+          f = false;
+        }
+        if (!vis[i] && st >= _data[i][0]) {
+          _readyq[_tt][i] = true;
+        }
+      }
+      if (f) {
+        st++;
+        _readyq.removeLast();
+        continue;
+      }
+      _cardv.add([0, 0, 0, 0]);
+      _cardvs.add(['0', '0', '0', '0']);
+      vis[loc] = true;
+      _cardv[_tt][0] = loc;
+      _cardv[_tt][1] = st;
+      cal++;
+      _data[loc][2] = st + _data[loc][1];
+      st = _data[loc][2];
+      _cardv[_tt][2] = st;
+      _cardv[_tt][3] = 1;
+      _data[loc][3] = _data[loc][2] - _data[loc][0];
+      _data[loc][4] = _data[loc][3] - _data[loc][1];
+      for (int i = 0; i < 5; ++i) _datas[loc][i] = _data[loc][i].toString();
+      for (int i = 0; i < 4; ++i) _cardvs[_tt][i] = _cardv[_tt][i].toString();
+      _tt++;
+    }
+  }
 
   void _viz() {
     int fct = 0;
     for (int i = 0; i < _counter; ++i) {
-      fct = max(fct, _data[i][4]);
+      fct = max(fct, _data[i][2]);
     }
     List<int> _ddata;
     _ddata = new List<int>.filled(fct + 1, -1);
-    List<int> _Running, _IoIn, _IoOut;
-    _Running = new List<int>.filled(fct + 1, -1);
-    _IoIn = new List<int>.filled(_counter, -1);
-    _IoOut = new List<int>.filled(_counter, -1);
 
-    //start
     int cal = 0, st = 0;
-    List<int> vis, artime, tbt;
-    vis = new List<int>.filled(_counter, 0);
-    artime = new List<int>.filled(_counter, 0);
-    tbt = new List<int>.filled(_counter, 0);
-    for (int i = 0; i < _counter; ++i) {
-      artime[i] = _data[i][0];
-      tbt[i] = _data[i][1] + _data[i][3];
-    }
-    while (cal != 2 * _counter) {
+    List<bool> vis;
+    List<int> val;
+    vis = new List<bool>.filled(_counter, false);
+    val = new List<int>.filled(_counter, 0);
+    for (int i = 0; i < _counter; ++i) val[i] = _data[i][1];
+    while (cal != _counter) {
       var mn = 100, loc = 0;
       bool f = true;
       for (var i = 0; i < _counter; ++i) {
-        if (tbt[i] < mn && (vis[i] == 0 || vis[i] == 1) && st >= _data[i][0]) {
-          mn = tbt[i];
+        if (_data[i][1] < mn && !vis[i] && st >= _data[i][0]) {
+          mn = _data[i][1];
           loc = i;
           f = false;
         }
@@ -61,34 +164,23 @@ class _SRTNIOState extends State<SRTNIO> {
         st++;
         continue;
       }
-      cal++;
-      if (vis[loc] == 0) {
-        _data[loc][7] = st - _data[loc][0];
-        _data[loc][4] = st + _data[loc][1];
-        for (int i = st + 1; i <= _data[loc][4]; ++i) {
-          _ddata[i] = loc;
-        }
-        st = _data[loc][4];
-        _data[loc][0] = _data[loc][4] + _data[loc][2];
-        _IoIn[loc] = _data[loc][4];
-        _IoOut[loc] = _data[loc][0] - 1;
-        tbt[loc] -= _data[loc][1];
+      if (_data[loc][1] > 0) {
+        st++;
+        _ddata[st] = loc;
+        _data[loc][1]--;
       }
-      if (vis[loc] == 1) {
-        _data[loc][4] = st + _data[loc][3];
-        for (int i = st + 1; i <= _data[loc][4]; ++i) {
-          _ddata[i] = loc;
-        }
-        st = _data[loc][4];
-        _data[loc][5] = _data[loc][4] - artime[loc];
-        _data[loc][6] = _data[loc][5] - _data[loc][1] - _data[loc][3];
+      if (_data[loc][1] == 0) {
+        vis[loc] = true;
+        cal++;
       }
-      for (int i = 0; i < 8; ++i) _datas[loc][i] = _data[loc][i].toString();
-      vis[loc]++;
+      _data[loc][2] = st;
+      _data[loc][3] = _data[loc][2] - _data[loc][0];
+      _data[loc][4] = _data[loc][3] - val[loc];
     }
-    for (int i = 0; i < _counter; ++i) _data[i][0] = artime[i];
-    //end
+    for (int i = 0; i < _counter; ++i) _data[i][1] = val[i];
 
+    List<int> _Running;
+    _Running = new List<int>.filled(fct + 1, -1);
     for (int i = 0; i < fct; ++i) {
       if (_ddata[i] == _ddata[i + 1]) {
         _Running[i] = _ddata[i];
@@ -168,27 +260,21 @@ class _SRTNIOState extends State<SRTNIO> {
     _Re.clear();
     _Ru.clear();
     _Te.clear();
-    _Io.clear();
     for (int i = 0; i <= fct; ++i) {
-      String tempNa = '', tempRe = '', tempTe = '', tempRu = '', tempIo = '';
+      String tempNa = '', tempRe = '', tempTe = '', tempRu = '';
       for (int j = 0; j < _counter; ++j) {
         if (_data[j][0] > i) {
           if (tempNa.isEmpty)
             tempNa += 'P' + j.toString();
           else
             tempNa += ', P' + j.toString();
-        } else if (_data[j][4] <= i) {
+        } else if (_data[j][2] <= i) {
           if (tempTe.isEmpty)
             tempTe += 'P' + j.toString();
           else
             tempTe += ', P' + j.toString();
         } else if (_Running[i] == j) {
           tempRu += 'P' + j.toString();
-        } else if (_IoIn[j] <= i && _IoOut[j] >= i) {
-          if (tempIo.isEmpty)
-            tempIo += 'P' + j.toString();
-          else
-            tempIo += ', P' + j.toString();
         } else {
           if (tempRe.isEmpty)
             tempRe += 'P' + j.toString();
@@ -200,97 +286,28 @@ class _SRTNIOState extends State<SRTNIO> {
       _Te.add(tempTe);
       _Re.add(tempRe);
       _Ru.add(tempRu);
-      _Io.add(tempIo);
     }
 
-    view.TakeData('SJF', _Na, _Re, _Ru, _Io, _Te, fct, _disdata, _disNum);
+    view.TakeData('SRTF', _Na, _Re, _Ru, _Te, fct, _disdata, _disNum);
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => view()),
     );
   }
-
-  void _Gant() {
-    _cardv.clear();
-    _cardvs.clear();
-    _readyq.clear();
-    int cal = 0, st = 0, _tt = 0;
-    List<int> vis, artime, tbt;
-    vis = new List<int>.filled(_counter, 0);
-    artime = new List<int>.filled(_counter, 0);
-    tbt = new List<int>.filled(_counter, 0);
-    for (int i = 0; i < _counter; ++i) {
-      artime[i] = _data[i][0];
-      tbt[i] = _data[i][1] + _data[i][3];
-    }
-    while (cal != 2 * _counter) {
-      _readyq.add(List.filled(_counter, false));
-      var mn = 100, loc = 0;
-      bool f = true;
-      for (var i = 0; i < _counter; ++i) {
-        if (tbt[i] < mn && (vis[i] == 0 || vis[i] == 1) && st >= _data[i][0]) {
-          mn = tbt[i];
-          loc = i;
-          f = false;
-        }
-        if ((vis[i] == 0 || vis[i] == 1) && st >= _data[i][0]) {
-          _readyq[_tt][i] = true;
-        }
-      }
-      if (f) {
-        st++;
-        _readyq.removeLast();
-        continue;
-      }
-      cal++;
-      if (vis[loc] == 0) {
-        _cardv.add([0, 0, 0, 0]);
-        _cardvs.add(['0', '0', '0', '0']);
-        _cardv[_tt][0] = loc;
-        _cardv[_tt][1] = st;
-        _data[loc][7] = st - _data[loc][0];
-        _data[loc][4] = st + _data[loc][1];
-        st = _data[loc][4];
-        _cardv[_tt][2] = st;
-        _cardv[_tt][3] = 2;
-        _data[loc][0] = _data[loc][4] + _data[loc][2];
-        tbt[loc] -= _data[loc][1];
-      } else if (vis[loc] == 1) {
-        _cardv.add([0, 0, 0, 0]);
-        _cardvs.add(['0', '0', '0', '0']);
-        _cardv[_tt][0] = loc;
-        _cardv[_tt][1] = st;
-        _data[loc][4] = st + _data[loc][3];
-        st = _data[loc][4];
-        _cardv[_tt][2] = st;
-        _cardv[_tt][3] = 1;
-        _data[loc][5] = _data[loc][4] - artime[loc];
-        _data[loc][6] = _data[loc][5] - _data[loc][1] - _data[loc][3];
-      }
-      for (int i = 0; i < 8; ++i) _datas[loc][i] = _data[loc][i].toString();
-      for (int i = 0; i < 4; ++i) _cardvs[_tt][i] = _cardv[_tt][i].toString();
-      vis[loc]++;
-      _tt++;
-    }
-    for (int i = 0; i < _counter; ++i) _data[i][0] = artime[i];
-  }
-
-  void _calculate() {
+  
+void _calculate() {
     int cal = 0, st = 0;
-    List<int> vis, artime, tbt;
-    vis = new List<int>.filled(_counter, 0);
-    artime = new List<int>.filled(_counter, 0);
-    tbt = new List<int>.filled(_counter, 0);
-    for (int i = 0; i < _counter; ++i) {
-      artime[i] = _data[i][0];
-      tbt[i] = _data[i][1] + _data[i][3];
-    }
-    while (cal != 2 * _counter) {
+    List<bool> vis;
+    List<int> val;
+    vis = new List<bool>.filled(_counter, false);
+    val = new List<int>.filled(_counter, 0);
+    for (int i = 0; i < _counter; ++i) val[i] = _data[i][1];
+    while (cal != _counter) {
       var mn = 100, loc = 0;
       bool f = true;
       for (var i = 0; i < _counter; ++i) {
-        if (tbt[i] < mn && (vis[i] == 0 || vis[i] == 1) && st >= _data[i][0]) {
-          mn = tbt[i];
+        if (_data[i][1] < mn && !vis[i] && st >= _data[i][0]) {
+          mn = _data[i][1];
           loc = i;
           f = false;
         }
@@ -299,36 +316,29 @@ class _SRTNIOState extends State<SRTNIO> {
         st++;
         continue;
       }
-      cal++;
-      if (vis[loc] == 0) {
-        _data[loc][7] = st - _data[loc][0];
-        _data[loc][4] = st + _data[loc][1];
-        st = _data[loc][4];
-        _data[loc][0] = _data[loc][4] + _data[loc][2];
-        tbt[loc] -= _data[loc][1];
+      if (_data[loc][1] > 0) {
+        st++;
+        _data[loc][1]--;
       }
-      if (vis[loc] == 1) {
-        _data[loc][4] = st + _data[loc][3];
-        st = _data[loc][4];
-        _data[loc][5] = _data[loc][4] - artime[loc];
-        _data[loc][6] = _data[loc][5] - _data[loc][1] - _data[loc][3];
+      if (_data[loc][1] == 0) {
+        vis[loc] = true;
+        cal++;
       }
-      for (int i = 0; i < 8; ++i) _datas[loc][i] = _data[loc][i].toString();
+      _data[loc][2] = st;
+      _data[loc][3] = _data[loc][2] - _data[loc][0];
+      _data[loc][4] = _data[loc][3] - val[loc];
+      for (int i = 0; i < 5; ++i) _datas[loc][i] = _data[loc][i].toString();
       int _sum = 0;
-      for (int i = 0; i < _counter; ++i) _sum += _data[i][5];
+      for (int i = 0; i < _counter; ++i) _sum += _data[i][3];
       _avg_tat = _sum / _counter;
       _sum = 0;
-      for (int i = 0; i < _counter; ++i) _sum += _data[i][6];
+      for (int i = 0; i < _counter; ++i) _sum += _data[i][4];
       _avg_wt = _sum / _counter;
       int t = loc;
       _rowList[loc] = DataRow(cells: <DataCell>[
         DataCell(
             Text('P' + t.toString(), style: TextStyle(color: Colors.black))),
         DataCell(TextField(
-          //expands: true,
-          // inputFormatters: [
-          //   LengthLimitingTextInputFormatter(2),
-          // ],
           maxLines: 1,
           textAlign: TextAlign.center,
           keyboardType: TextInputType.number,
@@ -354,139 +364,24 @@ class _SRTNIOState extends State<SRTNIO> {
             });
           },
         )),
-        DataCell(TextField(
-          maxLines: 1,
-          //       inputFormatters:[
-          //   LengthLimitingTextInputFormatter(2),
-          // ],
-          textAlign: TextAlign.center,
-          keyboardType: TextInputType.number,
-          style: TextStyle(color: Colors.black),
-          onChanged: (val) {
-            setState(() {
-              _datas[t][2] = val;
-              _data[t][2] = int.parse(val);
-              _calculate();
-            });
-          },
-        )),
-        DataCell(TextField(
-          maxLines: 1,
-          textAlign: TextAlign.center,
-          keyboardType: TextInputType.number,
-          style: TextStyle(color: Colors.black),
-          onChanged: (val) {
-            setState(() {
-              _datas[t][3] = val;
-              _data[t][3] = int.parse(val);
-              _calculate();
-            });
-          },
-        )),
+        DataCell(Text(_datas[t][2], style: TextStyle(color: Colors.black))),
+        DataCell(Text(_datas[t][3], style: TextStyle(color: Colors.black))),
         DataCell(Text(_datas[t][4], style: TextStyle(color: Colors.black))),
-        DataCell(Text(_datas[t][5], style: TextStyle(color: Colors.black))),
-        DataCell(Text(_datas[t][6], style: TextStyle(color: Colors.black))),
-        DataCell(Text(_datas[t][7], style: TextStyle(color: Colors.black))),
       ]);
-      vis[loc]++;
     }
-    for (int i = 0; i < _counter; ++i) _data[i][0] = artime[i];
+    for (int i = 0; i < _counter; ++i) _data[i][1] = val[i];
   }
-
-  void _addrow() {
-    setState(() {
-      var t = _counter;
-      _counter++;
-      _data.add([0, 0, 0, 0, 0, 0, 0, 0]);
-      _datas.add(['0', '0', '0', '0', '0', '0', '0', '0']);
-      _rowList.add(DataRow(cells: <DataCell>[
-        DataCell(Text('P' + (_counter - 1).toString(),
-            style: TextStyle(color: Colors.black))),
-        DataCell(TextField(
-          maxLines: 1,
-          textAlign: TextAlign.center,
-          keyboardType: TextInputType.number,
-          style: TextStyle(color: Colors.black),
-          onChanged: (val) {
-            setState(() {
-              _datas[t][0] = val;
-              _data[t][0] = int.parse(val);
-              _calculate();
-            });
-          },
-        )),
-        DataCell(TextField(
-          maxLines: 1,
-          textAlign: TextAlign.center,
-          keyboardType: TextInputType.number,
-          style: TextStyle(color: Colors.black),
-          onChanged: (val) {
-            _datas[t][1] = val;
-            _data[t][1] = int.parse(val);
-            setState(() {
-              _calculate();
-            });
-          },
-        )),
-        DataCell(TextField(
-          maxLines: 1,
-          textAlign: TextAlign.center,
-          keyboardType: TextInputType.number,
-          style: TextStyle(color: Colors.black),
-          onChanged: (val) {
-            _datas[t][2] = val;
-            _data[t][2] = int.parse(val);
-            setState(() {
-              _calculate();
-            });
-          },
-        )),
-        DataCell(TextField(
-          maxLines: 1,
-          textAlign: TextAlign.center,
-          keyboardType: TextInputType.number,
-          style: TextStyle(color: Colors.black),
-          onChanged: (val) {
-            _datas[t][3] = val;
-            _data[t][3] = int.parse(val);
-            setState(() {
-              _calculate();
-            });
-          },
-        )),
-        DataCell(Text(_datas[t][4], style: TextStyle(color: Colors.black))),
-        DataCell(Text(_datas[t][5], style: TextStyle(color: Colors.black))),
-        DataCell(Text(_datas[t][6], style: TextStyle(color: Colors.black))),
-        DataCell(Text(_datas[t][7], style: TextStyle(color: Colors.black))),
-      ]));
-    });
-  }
-
-  void _RemoveRow() {
-    setState(() {
-      _counter--;
-      _rowList.removeLast();
-      _data.removeLast();
-      _datas.removeLast();
-      _calculate();
-    });
-  }
-
-  var f = true;
-  @override
+  
+  
+    @override
   Widget build(BuildContext context) {
-    if (f) {
-      _addrow();
-      f = false;
-    }
     return Scaffold(
-        backgroundColor: Colors.white,
         appBar: AppBar(
           title: Text(
             'SRTN',
-            style: TextStyle(fontFamily: 'Pacifico'),
+            style:
+                TextStyle(fontFamily: 'Pacifico', fontWeight: FontWeight.bold),
           ),
-         
         ),
         body: Container(
           width: double.infinity,
@@ -505,12 +400,14 @@ class _SRTNIOState extends State<SRTNIO> {
               Padding(
                 child: Align(
                   child: Switch(
-                      value: true,
+                      value: false,
                       onChanged: (t) {
                         Navigator.pop(context);
+                        // Navigator.of(context).push(FCFSIOBT());
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => SRTN()),
+                          MaterialPageRoute(
+                              builder: (context) => SRTNIO()), //TBU
                         );
                       }),
                   alignment: Alignment.topRight,
@@ -537,14 +434,6 @@ class _SRTNIOState extends State<SRTNIO> {
                                 style: TextStyle(color: Colors.black)),
                             numeric: true),
                         DataColumn(
-                            label: Text('I/O BT',
-                                style: TextStyle(color: Colors.black)),
-                            numeric: true),
-                        DataColumn(
-                            label: Text('BT',
-                                style: TextStyle(color: Colors.black)),
-                            numeric: true),
-                        DataColumn(
                             label: Text('CT',
                                 style: TextStyle(color: Colors.black)),
                             numeric: true),
@@ -554,10 +443,6 @@ class _SRTNIOState extends State<SRTNIO> {
                             numeric: true),
                         DataColumn(
                             label: Text('WT',
-                                style: TextStyle(color: Colors.black)),
-                            numeric: true),
-                        DataColumn(
-                            label: Text('RT',
                                 style: TextStyle(color: Colors.black)),
                             numeric: true),
                       ],
@@ -572,12 +457,8 @@ class _SRTNIOState extends State<SRTNIO> {
                   Align(
                     alignment: Alignment.bottomLeft,
                     child: (ElevatedButton(
-                      onPressed: _addrow,
-                      // color: Colors.black,
-                      // shape: RoundedRectangleBorder(
-                      //   borderRadius: BorderRadius.circular(15),
-                      //   side: BorderSide(color: Colors.red),
-                      // ),
+                      onPressed: //TBU
+                          _addrow,
                       child: Text(
                         'Add Process',
                         style: TextStyle(color: Colors.white),
@@ -587,26 +468,20 @@ class _SRTNIOState extends State<SRTNIO> {
                   Align(
                     alignment: Alignment.bottomCenter,
                     child: Builder(
-                      builder: (context)=> (ElevatedButton( 
-                        // color: Colors.black,
-                        // shape: RoundedRectangleBorder(
-                        //   borderRadius: BorderRadius.circular(15),
-                        //   side: BorderSide(color: Colors.red),
-                        // ),
+                      builder: (context) => (ElevatedButton(
                         child: Text(
                           'Delete Process',
                           style: TextStyle(color: Colors.white),
                         ),
-                        onPressed: (){
+                        onPressed: () {
                           _RemoveRow();
                           // Scaffold.of(context).showSnackBar(
                           //     SnackBar(
                           //       content: Text('Row Deleted'),
                           //     )
-                         // );
+                          //);
                         },
-                      )
-                      ),
+                      )),
                     ),
                   ),
                 ],
@@ -620,16 +495,12 @@ class _SRTNIOState extends State<SRTNIO> {
                   Align(
                     alignment: Alignment.bottomCenter,
                     child: (ElevatedButton(
-                      // color: Colors.black,
-                      // shape: RoundedRectangleBorder(
-                      //   borderRadius: BorderRadius.circular(15),
-                      //   side: BorderSide(color: Colors.red),
-                      // ),
                       child: Text(
                         'Gantt Chart',
                         style: TextStyle(color: Colors.white),
                       ),
                       onPressed: () {
+                       // _calculate();
                         _Gant();
                         Navigator.push(
                             context,
@@ -642,11 +513,6 @@ class _SRTNIOState extends State<SRTNIO> {
                   Align(
                     alignment: Alignment.bottomCenter,
                     child: (ElevatedButton(
-                      // color: Colors.black,
-                      // shape: RoundedRectangleBorder(
-                      //   borderRadius: BorderRadius.circular(15),
-                      //   side: BorderSide(color: Colors.red),
-                      // ),
                       child: Text(
                         'Visulization',
                         style: TextStyle(color: Colors.white),
@@ -656,6 +522,7 @@ class _SRTNIOState extends State<SRTNIO> {
                   ),
                 ],
               ),
+              
               Padding(
                 padding: EdgeInsets.all(10),
               ),
@@ -669,7 +536,6 @@ class _SRTNIOState extends State<SRTNIO> {
                       borderRadius: BorderRadius.all(Radius.circular(15)),
                     ),
                     padding: EdgeInsets.all(10),
-                    //padding: EdgeInsets.fromLTRB(60, 25, 0, 0),
                     child: Text('AVg. TAT = ' + _avg_tat.toStringAsFixed(2),
                         style: TextStyle(color: Colors.black)),
                   ),
