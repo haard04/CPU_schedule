@@ -1,5 +1,5 @@
 import 'package:cpu/LRU.dart';
-import 'package:cpu/PCBB.dart';
+import 'package:cpu/bounderBuffer/PCBB.dart';
 import 'package:cpu/SRTN/SRTN.dart';
 import 'package:cpu/SSTF.dart';
 import 'package:flutter/material.dart';

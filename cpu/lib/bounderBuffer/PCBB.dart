@@ -1,4 +1,7 @@
-import 'package:cpu/SRTN/widget.dart';
+import 'dart:collection';
+import 'dart:math';
+
+import 'package:cpu/bounderBuffer/widget.dart';
 import 'package:flutter/material.dart';
 
 class PCBB extends StatefulWidget {
@@ -13,6 +16,11 @@ class _PCBBState extends State<PCBB> {
   String _buffersize='';
   String _producerweight='';
   String _consumerweight='';
+  ListQueue<int>Buffer=ListQueue();
+
+  void consumer(){
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +52,7 @@ class _PCBBState extends State<PCBB> {
                   onChanged: (value) {
                     setState(() {
                       _buffersize = value;
+                      
                       
                    
                     });
@@ -87,6 +96,32 @@ class _PCBBState extends State<PCBB> {
               ElevatedButton(onPressed: (){
                 setState(() {
                   // Update the value of the TextField.
+                  for(int i=0;i<int.parse(_producerweight);i++)
+                  try{
+                    if(Buffer.length<int.parse(_buffersize)){
+                    Buffer.add(i);}
+                    else {
+                     // print("FULL");
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                        return AlertDialog(
+                        content: Text('Buffer is FUll!!'),
+                         actions: [
+                          
+                           ElevatedButton(onPressed: (){
+                             Navigator.of(context).pop;
+                           },
+                           child: Text('Ok'),
+                           )
+                        ]
+                         );});
+                                }
+                  }
+                  catch(e){
+                    print(e.toString());
+                  }
+                  
                 
                   print(_producerweight);
                   });
@@ -114,6 +149,32 @@ class _PCBBState extends State<PCBB> {
               ElevatedButton(onPressed: (){
                 setState(() {
                   // Update the value of the TextField.
+                  for(int i=0;i<int.parse(_consumerweight);i++)
+                  
+
+                  try {
+                    if(Buffer.length>0){
+                    Buffer.removeLast();}
+                    else {
+                     // print("FULL");
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                        return AlertDialog(
+                        content: Text('Buffer is Empty'),
+                         actions: [
+                          
+                           TextButton(onPressed: (){
+                             Navigator.of(context).pop();
+                           },
+                           child: Text('Ok'),
+                           )
+                        ]
+                         );});
+                                }
+                  } catch (e) {
+                    print(e.toString());
+                  }
                 
                   print(_consumerweight);
                   });
@@ -122,7 +183,7 @@ class _PCBBState extends State<PCBB> {
               ),
             ),
                 
-               // for(int i=0;i<int.parse(_buffersize??'5');i++) Wid(id: i+1,i: i,)
+                for(int i=0;i<Buffer.length;i++) Wid(id: i+1,i: i,)
               
           ],
         ),
