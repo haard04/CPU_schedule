@@ -67,7 +67,6 @@ class _PCBBState extends State<PCBB> {
               SizedBox(width: 16.0),
               ElevatedButton(onPressed: (){
                 setState(() {
-                  // Update the value of the TextField.
                 
                   print(_buffersize);
                   });
@@ -87,6 +86,7 @@ class _PCBBState extends State<PCBB> {
                       
                     });
                   },
+                  keyboardType: TextInputType.numberWithOptions(),
                   decoration: InputDecoration(
                 hintText: 'Enter value',
               ),
@@ -95,7 +95,6 @@ class _PCBBState extends State<PCBB> {
               SizedBox(width: 16.0),
               ElevatedButton(onPressed: (){
                 setState(() {
-                  // Update the value of the TextField.
                   for(int i=0;i<int.parse(_producerweight);i++)
                   try{
                     if(Buffer.length<int.parse(_buffersize)){
@@ -140,6 +139,7 @@ class _PCBBState extends State<PCBB> {
                       _consumerweight = value;
                     });
                   },
+                  keyboardType: TextInputType.numberWithOptions(),
                   decoration: InputDecoration(
                 hintText: 'Enter value',
               ),
