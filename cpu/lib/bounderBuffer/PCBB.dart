@@ -18,8 +18,30 @@ class _PCBBState extends State<PCBB> {
   String _consumerweight='';
   ListQueue<int>Buffer=ListQueue();
 
-  void consumer(){
+  int counter=1;
 
+  void reset(){
+    setState(() {
+                    counter=1;
+    _buffersize='0';
+    _producerweight='0';
+    _consumerweight='0';  
+    print(_buffersize);
+    print(_producerweight);
+    print(_consumerweight);
+    Buffer.clear();
+    print(Buffer);
+    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+                              builder: (context) => PCBB()),
+                              (route) => route.isFirst,
+                              );
+                      
+                    });
+    
+  }
+
+  void save(){
+      
   }
 
   @override
@@ -59,18 +81,12 @@ class _PCBBState extends State<PCBB> {
                   },
                   keyboardType: TextInputType.numberWithOptions(),
                   decoration: InputDecoration(
-                hintText: 'Enter value',
+                hintText: _buffersize,
                 
               ),
                 ),
               ),
-              SizedBox(width: 16.0),
-              ElevatedButton(onPressed: (){
-                setState(() {
-                
-                  print(_buffersize);
-                  });
-              }, child: Text('Buffer Size'))
+              
                 ],
               ),
             ),
@@ -88,7 +104,7 @@ class _PCBBState extends State<PCBB> {
                   },
                   keyboardType: TextInputType.numberWithOptions(),
                   decoration: InputDecoration(
-                hintText: 'Enter value',
+                hintText: _producerweight,
               ),
                 ),
               ),
@@ -98,23 +114,24 @@ class _PCBBState extends State<PCBB> {
                   for(int i=0;i<int.parse(_producerweight);i++)
                   try{
                     if(Buffer.length<int.parse(_buffersize)){
-                    Buffer.add(i);}
+                    Buffer.add(counter);counter++;}
                     else {
                      // print("FULL");
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {
                         return AlertDialog(
-                        content: Text('Buffer is FUll!!'),
+                        content: Text('Buffer is FULL!!'),
                          actions: [
                           
                            ElevatedButton(onPressed: (){
-                             Navigator.of(context).pop;
+                             Navigator.of(context).pop();
                            },
                            child: Text('Ok'),
                            )
                         ]
                          );});
+                         break;
                                 }
                   }
                   catch(e){
@@ -141,7 +158,7 @@ class _PCBBState extends State<PCBB> {
                   },
                   keyboardType: TextInputType.numberWithOptions(),
                   decoration: InputDecoration(
-                hintText: 'Enter value',
+                hintText: _consumerweight,
               ),
                 ),
               ),
@@ -171,6 +188,7 @@ class _PCBBState extends State<PCBB> {
                            )
                         ]
                          );});
+                         break;
                                 }
                   } catch (e) {
                     print(e.toString());
@@ -182,8 +200,18 @@ class _PCBBState extends State<PCBB> {
                 ],
               ),
             ),
+            Padding(padding: const EdgeInsets.all(20.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  ElevatedButton(onPressed: reset, child: Text('Reset')),
+                  ElevatedButton(onPressed: (){}, child: Text('Save')),
+                ],
+              ),
+            
+            ),
                 
-                for(int i=0;i<Buffer.length;i++) Wid(id: i+1,i: i,)
+                for(int i=0;i<Buffer.length;i++) Wid(id: Buffer.elementAt(i),i: i,)
               
           ],
         ),
