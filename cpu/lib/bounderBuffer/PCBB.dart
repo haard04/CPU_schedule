@@ -17,6 +17,8 @@ class _PCBBState extends State<PCBB> {
   String _producerweight='';
   String _consumerweight='';
   ListQueue<int>Buffer=ListQueue();
+  List<String>data=[];
+
 
   int counter=1;
 
@@ -40,8 +42,76 @@ class _PCBBState extends State<PCBB> {
     
   }
 
+  void consumer(){
+                setState(() {
+                  // Update the value of the TextField.
+                  for(int i=0;i<int.parse(_consumerweight);i++)
+                  
+
+                  try {
+                    if(Buffer.length>0){
+                    Buffer.removeLast();}
+                    else {
+                     // print("FULL");
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                        return AlertDialog(
+                        content: Text('Buffer is Empty'),
+                         actions: [
+                          
+                           TextButton(onPressed: (){
+                             Navigator.of(context).pop();
+                           },
+                           child: Text('Ok'),
+                           )
+                        ]
+                         );});
+                         break;
+                                }
+                  } catch (e) {
+                    print(e.toString());
+                  }
+                
+                  print(_consumerweight);
+                  });
+              }
+
+  void producer(){
+                setState(() {
+                  for(int i=0;i<int.parse(_producerweight);i++)
+                  try{
+                    if(Buffer.length<int.parse(_buffersize)){
+                    Buffer.add(counter);counter++;}
+                    else {
+                     // print("FULL");
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                        return AlertDialog(
+                        content: Text('Buffer is FULL!!'),
+                         actions: [
+                          
+                           ElevatedButton(onPressed: (){
+                             Navigator.of(context).pop();
+                           },
+                           child: Text('Ok'),
+                           )
+                        ]
+                         );});
+                         break;
+                                }
+                  }
+                  catch(e){
+                    print(e.toString());
+                  }
+                  
+                
+                  print(_producerweight);});
+                }
+
   void save(){
-      
+
   }
 
   @override
@@ -81,7 +151,7 @@ class _PCBBState extends State<PCBB> {
                   },
                   keyboardType: TextInputType.numberWithOptions(),
                   decoration: InputDecoration(
-                hintText: _buffersize,
+                hintText: 'Buffer size',
                 
               ),
                 ),
@@ -104,44 +174,12 @@ class _PCBBState extends State<PCBB> {
                   },
                   keyboardType: TextInputType.numberWithOptions(),
                   decoration: InputDecoration(
-                hintText: _producerweight,
+                hintText: 'Producer Weight',
               ),
                 ),
               ),
               SizedBox(width: 16.0),
-              ElevatedButton(onPressed: (){
-                setState(() {
-                  for(int i=0;i<int.parse(_producerweight);i++)
-                  try{
-                    if(Buffer.length<int.parse(_buffersize)){
-                    Buffer.add(counter);counter++;}
-                    else {
-                     // print("FULL");
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                        return AlertDialog(
-                        content: Text('Buffer is FULL!!'),
-                         actions: [
-                          
-                           ElevatedButton(onPressed: (){
-                             Navigator.of(context).pop();
-                           },
-                           child: Text('Ok'),
-                           )
-                        ]
-                         );});
-                         break;
-                                }
-                  }
-                  catch(e){
-                    print(e.toString());
-                  }
-                  
-                
-                  print(_producerweight);
-                  });
-              }, child: Text('Producer'))
+              ElevatedButton(onPressed: producer, child: Text('Producer'))
                 ],
               ),
             ),
@@ -158,45 +196,12 @@ class _PCBBState extends State<PCBB> {
                   },
                   keyboardType: TextInputType.numberWithOptions(),
                   decoration: InputDecoration(
-                hintText: _consumerweight,
+                hintText: 'consumer weight',
               ),
                 ),
               ),
               SizedBox(width: 16.0),
-              ElevatedButton(onPressed: (){
-                setState(() {
-                  // Update the value of the TextField.
-                  for(int i=0;i<int.parse(_consumerweight);i++)
-                  
-
-                  try {
-                    if(Buffer.length>0){
-                    Buffer.removeLast();}
-                    else {
-                     // print("FULL");
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                        return AlertDialog(
-                        content: Text('Buffer is Empty'),
-                         actions: [
-                          
-                           TextButton(onPressed: (){
-                             Navigator.of(context).pop();
-                           },
-                           child: Text('Ok'),
-                           )
-                        ]
-                         );});
-                         break;
-                                }
-                  } catch (e) {
-                    print(e.toString());
-                  }
-                
-                  print(_consumerweight);
-                  });
-              }, child: Text('Consumer'))
+              ElevatedButton(onPressed: consumer, child: Text('Consumer'))
                 ],
               ),
             ),
