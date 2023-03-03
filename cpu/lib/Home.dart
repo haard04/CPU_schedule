@@ -1,7 +1,7 @@
 import 'package:cpu/LRU.dart';
 import 'package:cpu/bounderBuffer/PCBB.dart';
 import 'package:cpu/SRTN/SRTN.dart';
-import 'package:cpu/SSTF.dart';
+import 'package:cpu/SSTF/SSTF.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
