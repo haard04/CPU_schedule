@@ -38,7 +38,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   sizer: ^2.0.15
   font_awesome_flutter: ^10.4.0
-  mongo_dart: ^0.8.2
+  syncfusion_flutter_charts: ^20.4.52
 
 dev_dependencies:
   flutter_test:

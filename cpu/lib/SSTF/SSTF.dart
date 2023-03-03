@@ -1,6 +1,8 @@
 import 'dart:collection';
 
 import 'package:cpu/SRTN/viewiobt.dart';
+import 'package:cpu/SSTF/model.dart';
+import 'package:cpu/SSTF/output.dart';
 import 'package:cpu/bounderBuffer/widget.dart';
 import 'package:flutter/material.dart';
 
@@ -17,32 +19,24 @@ class _SSTFState extends State<SSTF> {
   int head =0;
   ListQueue<int>Buffer=ListQueue();
   int x=0;
+List<dataschema> d=[];
 
-  void push(value){
-    setState((){
-                  
-                  
-                    if(value >0 && value <size){
-                    Buffer.add(value);
-                    }
-                    else {
-                     // print("FULL");
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                        return AlertDialog(
-                        content: Text('Please select Proper value'),
-                         actions: [
-                          
-                           ElevatedButton(onPressed: (){
-                             Navigator.of(context).pop();
-                           },
-                           child: Text('Ok'),
-                           )
-                        ]
-                         );});
-    }});
+int totalTime=0;
+double avgTime=0;
+
+
+
+
+  
+  
+  void calculate(){
+    setState(() {
+      for(int i=0;i<Buffer.length;i++){
+    d.add(dataschema(Buffer.elementAt(i), i));}
+    });
+    
   }
+
 
 
   @override
@@ -241,7 +235,7 @@ class _SSTFState extends State<SSTF> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  ElevatedButton(onPressed: null, child:Text('Calculate'))
+                  ElevatedButton(onPressed:(){calculate(); Navigator.push(context,MaterialPageRoute(builder: (context) =>  SSTFOP(d,totalTime,avgTime)));}, child:Text('Calculate'))
                 ],
               ),
             )
@@ -253,3 +247,4 @@ class _SSTFState extends State<SSTF> {
     );
   }
 }
+
