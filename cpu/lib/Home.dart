@@ -1,4 +1,4 @@
-import 'package:cpu/LRU.dart';
+import 'package:cpu/LRU/LRU.dart';
 import 'package:cpu/bounderBuffer/PCBB.dart';
 import 'package:cpu/SRTN/SRTN.dart';
 import 'package:cpu/SSTF/SSTF.dart';
