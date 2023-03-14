@@ -84,7 +84,7 @@ double avgTime=0;
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Shortest Seek Time First',
+        title: Text('Disk Scheduling Algorithm',
         style:TextStyle(
           fontFamily: 'Pacifico', fontWeight: FontWeight.bold
           ),
@@ -106,6 +106,21 @@ double avgTime=0;
       body: Container(
         child: Column(
           children: [
+            Padding(
+              padding: const EdgeInsets.all(20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text('Shortest Seek Time First',
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  )
+                ],
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.fromLTRB(20,20,20,10),
               child: Row(

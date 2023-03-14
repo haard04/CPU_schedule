@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:cpu/SRTN/SRTNINFO.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'SRTN.dart';
@@ -486,6 +487,19 @@ class _SRTNIOState extends State<SRTNIO> {
             'SRTN',
             style: TextStyle(fontFamily: 'Pacifico'),
           ),
+          actions: <Widget>[
+          Padding(
+      padding: EdgeInsets.only(right: 20.0),
+      child: GestureDetector(
+        onTap: (){
+          Navigator.push(context,MaterialPageRoute(builder: (conText) => SRTNINFO()),);
+        },
+        child: Icon(
+            Icons.info_outline
+        ),
+      )
+    ),
+        ]
          
         ),
         body: Container(

@@ -146,7 +146,7 @@ double avgTime=0;
                     },
                     keyboardType: TextInputType.numberWithOptions(),
                     decoration: InputDecoration(
-                hintText: 'Queue value',
+                hintText: 'Value',
                 
               ),
                     ),

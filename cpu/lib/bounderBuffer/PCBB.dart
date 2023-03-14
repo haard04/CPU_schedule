@@ -145,16 +145,24 @@ class _PCBBState extends State<PCBB> {
           physics: const AlwaysScrollableScrollPhysics(),
         child: Column(
           children: [
-            Row(
-              children: [
-                Text('Producer-Consumer Bounded Buffer Problem ',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold
-                  ),
-                )
-              ],
+            Padding(
+              padding: const EdgeInsets.all(20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: Text('Producer Consumer Bounded Buffer Problem',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    ),
+                  )
+                ],
+              ),
             ),
             Padding(
               padding: const EdgeInsets.all(20.0),
