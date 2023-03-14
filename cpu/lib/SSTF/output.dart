@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:cpu/SSTF/SSTF.dart';
 import 'package:cpu/SSTF/model.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +13,9 @@ class SSTFOP extends StatelessWidget {
   List<dataschema> data;
   int totalTime;
   double avgTime;
-   SSTFOP(this.data,this.totalTime,this.avgTime,{Key? key}) : super(key: key);
+  ListQueue Buffer;
+  ListQueue calculatedBuffer;
+   SSTFOP(this.data,this.totalTime,this.avgTime,this.calculatedBuffer,this.Buffer,{Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -37,15 +41,31 @@ class SSTFOP extends StatelessWidget {
               )
             ]
           ),
-          Row(
-            children: [
-              Text('Total Time:'+totalTime.toString())
-            ],
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20,40,20,20),
+            child: Row(
+              children: [
+                Text('Total Time:'+totalTime.toString(),
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold
+                ),
+                )
+              ],
+            ),
           ),
-          Row(
-            children: [
-              Text('Avg. Time: '+avgTime.toString())
-            ],
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20,0,20,20),
+            child: Row(
+              children: [
+                Text('Avg. Time: '+avgTime.toString(),
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold
+                ),
+                )
+              ],
+            ),
           )
           ],
         ),

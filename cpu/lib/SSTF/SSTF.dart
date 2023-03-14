@@ -1,5 +1,5 @@
 import 'dart:collection';
-
+//  d.add(dataschema(Buffer.elementAt(i), i));
 import 'package:cpu/SRTN/viewiobt.dart';
 import 'package:cpu/SSTF/model.dart';
 import 'package:cpu/SSTF/output.dart';
@@ -11,13 +11,23 @@ class SSTF extends StatefulWidget {
 
   @override
   State<SSTF> createState() => _SSTFState();
+ 
 }
 
 class _SSTFState extends State<SSTF> {
+  @override
+
+   final fieldText = TextEditingController();
+  void clearText() {
+    fieldText.clear();
+  }
+
 
   int size =0;
   int head =0;
   ListQueue<int>Buffer=ListQueue();
+  ListQueue<int> calculatedBuffer =ListQueue();
+  
   int x=0;
 List<dataschema> d=[];
 
@@ -27,13 +37,43 @@ double avgTime=0;
 
 
 
+
+
+
+
+
+
   
   
   void calculate(){
     setState(() {
-      for(int i=0;i<Buffer.length;i++){
-    d.add(dataschema(Buffer.elementAt(i), i));}
+      int counter=0;
+      d.add(dataschema(head,counter));
+      counter++;
+      
+      calculatedBuffer=Buffer;
+      
+      int l=Buffer.length;
+      int  min,x; 
+      while((calculatedBuffer.isNotEmpty)){
+        min = (head-calculatedBuffer.elementAt(0)).abs(); x=0;
+        for(int i=0; i<calculatedBuffer.length; i++){
+            if((head-calculatedBuffer.elementAt(i)).abs()<min){
+                min=(head-calculatedBuffer.elementAt(i)).abs(); x=i;
+            }
+        }
+        totalTime+=min; head=calculatedBuffer.elementAt(x);
+        print(x);
+        print(totalTime);
+        d.add(dataschema(calculatedBuffer.elementAt(x),counter));
+        counter++;
+        calculatedBuffer.remove(calculatedBuffer.elementAt(x));
+        
+    }
+    avgTime=totalTime/l;
+    
     });
+    print(d);
     
   }
 
@@ -167,6 +207,7 @@ double avgTime=0;
                        onChanged: (value) {
                         x=int.parse(value);
                     },
+                    controller: fieldText,
                     keyboardType: TextInputType.numberWithOptions(),
                     decoration: InputDecoration(
                 hintText: 'Queue value',
@@ -179,6 +220,7 @@ double avgTime=0;
                         if(x<size&&x>-1){
                           print(size);
                         Buffer.add(x);
+                        clearText();
                         print(Buffer);
                         }
                         else{
@@ -206,6 +248,7 @@ double avgTime=0;
                          setState(() {
                           if(Buffer.length>0){
                             Buffer.removeLast();
+                            clearText();
                           }
                           else{
                             
@@ -235,7 +278,9 @@ double avgTime=0;
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  ElevatedButton(onPressed:(){calculate(); Navigator.push(context,MaterialPageRoute(builder: (context) =>  SSTFOP(d,totalTime,avgTime)));}, child:Text('Calculate'))
+                  ElevatedButton(onPressed:(){calculate(); 
+                  Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (context) =>  SSTFOP(d,totalTime,avgTime,calculatedBuffer,Buffer)),(route)=>route.isFirst);}, 
+                  child:Text('Calculate'))
                 ],
               ),
             )
