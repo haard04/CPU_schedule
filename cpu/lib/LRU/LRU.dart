@@ -1,5 +1,6 @@
 import 'dart:collection';
 
+import 'package:cpu/LRU/LRUINFO.dart';
 import 'package:cpu/LRU/LRUOUT.dart';
 import 'package:cpu/SRTN/viewiobt.dart';
 import 'package:cpu/SSTF/model.dart';
@@ -48,6 +49,20 @@ double avgTime=0;
           fontFamily: 'Pacifico', fontWeight: FontWeight.bold
           ),
         ),
+
+        actions: <Widget>[
+          Padding(
+      padding: EdgeInsets.only(right: 20.0),
+      child: GestureDetector(
+        onTap: (){
+          Navigator.push(context,MaterialPageRoute(builder: (conText) => LRUINFO()),);
+        },
+        child: Icon(
+            Icons.info_outline
+        ),
+      )
+    ),
+        ]
       ),
       body: Container(
         child: Column(

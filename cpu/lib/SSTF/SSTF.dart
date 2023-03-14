@@ -1,6 +1,7 @@
 import 'dart:collection';
 //  d.add(dataschema(Buffer.elementAt(i), i));
 import 'package:cpu/SRTN/viewiobt.dart';
+import 'package:cpu/SSTF/SSTFINFO.dart';
 import 'package:cpu/SSTF/model.dart';
 import 'package:cpu/SSTF/output.dart';
 import 'package:cpu/bounderBuffer/widget.dart';
@@ -88,6 +89,19 @@ double avgTime=0;
           fontFamily: 'Pacifico', fontWeight: FontWeight.bold
           ),
         ),
+        actions: <Widget>[
+          Padding(
+      padding: EdgeInsets.only(right: 20.0),
+      child: GestureDetector(
+        onTap: (){
+          Navigator.push(context,MaterialPageRoute(builder: (conText) => SSTFINFO()),);
+        },
+        child: Icon(
+            Icons.info_outline
+        ),
+      )
+    ),
+        ]
       ),
       body: Container(
         child: Column(

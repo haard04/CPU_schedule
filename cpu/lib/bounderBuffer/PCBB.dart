@@ -1,6 +1,7 @@
 import 'dart:collection';
 import 'dart:math';
 
+import 'package:cpu/bounderBuffer/PCBBINFO.dart';
 import 'package:cpu/bounderBuffer/widget.dart';
 import 'package:flutter/material.dart';
 
@@ -117,7 +118,28 @@ class _PCBBState extends State<PCBB> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('PCBB',style: TextStyle(fontFamily: 'Pacifico',fontWeight: FontWeight.bold),),),
+      appBar: AppBar(title: Text(
+        'PCBB',
+        style: TextStyle(
+          fontFamily: 'Pacifico',
+          fontWeight: FontWeight.bold
+          ),
+        ),
+        actions: <Widget>[
+          Padding(
+      padding: EdgeInsets.only(right: 20.0),
+      child: GestureDetector(
+        onTap: (){
+          Navigator.push(context,MaterialPageRoute(builder: (conText) => PCBBINFO()),);
+        },
+        child: Icon(
+            Icons.info_outline
+        ),
+      )
+    ),
+        ]
+        
+      ),
       body: Container(
         child: SingleChildScrollView(
           physics: const AlwaysScrollableScrollPhysics(),

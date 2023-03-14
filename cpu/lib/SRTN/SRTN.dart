@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:cpu/Home.dart';
+import 'package:cpu/SRTN/SRTNINFO.dart';
 import 'package:cpu/SRTN/SRTNIO.dart';
 import 'package:cpu/SRTN/card.dart';
 import 'package:cpu/SRTN/view.dart';
@@ -382,6 +383,19 @@ void _calculate() {
             style:
                 TextStyle(fontFamily: 'Pacifico', fontWeight: FontWeight.bold),
           ),
+          actions: <Widget>[
+          Padding(
+      padding: EdgeInsets.only(right: 20.0),
+      child: GestureDetector(
+        onTap: (){
+          Navigator.push(context,MaterialPageRoute(builder: (conText) => SRTNINFO()),);
+        },
+        child: Icon(
+            Icons.info_outline
+        ),
+      )
+    ),
+        ]
         ),
         body: Container(
           width: double.infinity,
