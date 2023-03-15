@@ -3,6 +3,7 @@ import 'package:cpu/LRU/LRU.dart';
 import 'package:cpu/SRTN/SRTN.dart';
 import 'package:cpu/SSTF/SSTF.dart';
 import 'package:cpu/bounderBuffer/PCBB.dart';
+import 'package:cpu/profileCard.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
@@ -195,6 +196,19 @@ class aboutPage extends StatelessWidget {
               ),
               Divider(thickness: 3,color: Colors.purple,)
       ])),
-    );
+      body: Container(
+        child:SingleChildScrollView(
+        physics: AlwaysScrollableScrollPhysics(),
+        child: Column(
+          children: [
+            profileCard('Haard Shah','Team Leader & Front-end Developer','21BCP251','https://www.linkedin.com/in/haard-shah-437a08239/'),
+             profileCard('Kashish Parmar','Backend Developer & Reviewer','21BCP273','https://haard04.github.io/haard-portfolio/#'),
+             profileCard('Dhriti Shah','Backend Developer & Tester ','21BCP253',''),
+             profileCard('Shiv Patel','Data Manager','21BCP277',''),
+             profileCard('Darshil Sheth','Frontend Assitant & Backend Assitant','21BCP278',''),
+          ],
+        ),
+      ),
+    ));
   }
 }
