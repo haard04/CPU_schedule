@@ -1,12 +1,19 @@
 import 'dart:collection';
 
+import 'package:cpu/About.dart';
+import 'package:cpu/Home.dart';
 import 'package:cpu/LRU/LRUINFO.dart';
 import 'package:cpu/LRU/LRUOUT.dart';
+import 'package:cpu/SRTN/SRTN.dart';
 import 'package:cpu/SRTN/viewiobt.dart';
+import 'package:cpu/SSTF/SSTF.dart';
 import 'package:cpu/SSTF/model.dart';
 import 'package:cpu/SSTF/output.dart';
+import 'package:cpu/bounderBuffer/PCBB.dart';
 import 'package:cpu/bounderBuffer/widget.dart';
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
+
 
 class LRU extends StatefulWidget {
   LRU({Key? key}) : super(key: key);
@@ -64,6 +71,185 @@ double avgTime=0;
     ),
         ]
       ),
+      drawer: Drawer(
+        width: 60.w,
+          child: ListView(
+
+
+            children: [
+              Padding(
+                padding:EdgeInsets.all(10),
+                child: SizedBox(
+                  height: 8.h,
+                  child: const DrawerHeader(
+                    
+                    child: Text('CPU Simulator',
+                        textAlign: TextAlign.center,
+                        style:TextStyle(
+                          //sizer
+                          fontSize: 26,
+                          fontWeight: FontWeight.bold,
+                        )
+                    ),
+                  ),
+                ),
+              ),
+              Divider(thickness: 3,color: Colors.purple,),
+
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  
+                  children: [
+                    GestureDetector(child:SizedBox(
+                      
+                      // height: 10.h,
+                      width: 55.w,
+                      
+                      child: Text('Home', 
+                      textAlign: TextAlign.center,
+                      
+                      
+                      style: TextStyle(
+                     
+                        
+                        fontSize: 20.sp,
+                        fontWeight: FontWeight.bold
+                      ),
+                    )),onTap:() {Navigator.push(context,MaterialPageRoute(builder: (context) =>  Home()),);},)
+                  ],
+                ),
+              ),
+              Divider(thickness: 3,color: Colors.purple,),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  
+                  children: [
+                    GestureDetector(child:SizedBox(
+                      
+                      // height: 10.h,
+                      width: 55.w,
+                      
+                      child: Text('SRTN', 
+                      textAlign: TextAlign.center,
+                      
+                      
+                      style: TextStyle(
+                     
+                        
+                        fontSize: 20.sp,
+                        fontWeight: FontWeight.bold
+                      ),
+                    )),onTap:() {Navigator.push(context,MaterialPageRoute(builder: (context) =>  SRTN()),);},)
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  
+                  children: [
+                    GestureDetector(child:SizedBox(
+                      
+                      // height: 10.h,
+                      width: 55.w,
+                      
+                      child: Text('PCBB', 
+                      textAlign: TextAlign.center,
+                      
+                      
+                      style: TextStyle(
+                     
+                        
+                        fontSize: 20.sp,
+                        fontWeight: FontWeight.bold
+                      ),
+                    )),onTap:() {Navigator.push(context,MaterialPageRoute(builder: (context) =>  PCBB()),);},)
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  
+                  children: [
+                    GestureDetector(child:SizedBox(
+                      
+                      // height: 10.h,
+                      width: 55.w,
+                      
+                      child: Text('SSTF', 
+                      textAlign: TextAlign.center,
+                      
+                      
+                      style: TextStyle(
+                     
+                        
+                        fontSize: 20.sp,
+                        fontWeight: FontWeight.bold
+                      ),
+                    )),onTap:() {Navigator.push(context,MaterialPageRoute(builder: (context) =>  SSTF()),);},)
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  
+                  children: [
+                    GestureDetector(child:SizedBox(
+                      
+                      // height: 10.h,
+                      width: 55.w,
+                      
+                      child: Text('LRU', 
+                      textAlign: TextAlign.center,
+                      
+                      
+                      style: TextStyle(
+                     
+                        
+                        fontSize: 20.sp,
+                        fontWeight: FontWeight.bold
+                      ),
+                    )),onTap:() {Navigator.push(context,MaterialPageRoute(builder: (context) =>  LRU()),);},)
+                  ],
+                ),
+              ),
+              Divider(thickness: 3,color: Colors.purple,),
+              Padding(padding: const EdgeInsets.fromLTRB(0, 280, 0, 0),
+              child:Divider(thickness: 3,color: Colors.purple,),),
+             
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0,0,0,0),
+                child: Row(
+                  
+                  children: [
+                    
+                    GestureDetector(child:SizedBox(
+                      
+                      // height: 10.h,
+                      width: 55.w,
+                      
+                      child: Text('About', 
+                      textAlign: TextAlign.center,
+                      
+                      
+                      style: TextStyle(
+                     
+                        
+                        fontSize: 20.sp,
+                        fontWeight: FontWeight.bold
+                      ),
+                    )),onTap:() {Navigator.push(context,MaterialPageRoute(builder: (context) =>  aboutPage()),);},),
+                    
+                  ],
+                ),
+                
+              ),
+              Divider(thickness: 3,color: Colors.purple,)
+      ])),
       body: Container(
         child: Column(
           children: [

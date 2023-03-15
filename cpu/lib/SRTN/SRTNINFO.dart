@@ -41,6 +41,7 @@ class SRTNINFO extends StatelessWidget {
                       fontSize: 14.sp,
                       
                     ),
+                    textAlign: TextAlign.justify,
                     ),
                   )
                 ],
@@ -69,8 +70,10 @@ class SRTNINFO extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text('Shortest remaining Time Next scheduling algorithm is also referred as preemptive SJF scheduling algorithm. When a new process arrives at ready queue while one process is still executing then SRTN algorithm is performed to decide which process will execute next. This algorithm compare CPU burst time of newly arrived process with remaining (left) CPU burst time of currently executing process. If CPU burst time of new process is less than remaining time of current process then SRTN algorithm preempts current process execution and starts executing new process. ',
+                    textAlign: TextAlign.justify,
                     style: TextStyle(
                       fontSize: 14.sp,
+
                       
                     ),
                     ),
