@@ -20,7 +20,7 @@ class PCBBINFO extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text('Page Replacement',
+                  Text('Deadlock',
                   style: TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold
@@ -35,7 +35,7 @@ class PCBBINFO extends StatelessWidget {
               child: Row(
                 children: [
                   Expanded(
-                    child: Text('Page replacement algorithm decides which memory page is to be replaced. The process of replacement is sometimes called swap out or write to disk. Page replacement is done when the requested page is not found in the main memory (page fault). Frame allocation is all about how many frames are to be allocated to the process while the page replacement is all about determining the page number which needs to be replaced in order to make space for the requested page.',
+                    child: Text('A Deadlock is a situation where each of the computer process waits for a resource which is being assigned to some another process. In this situation, none of the process gets executed since the resource it needs, is held by some other process which is also waiting for some other resource to be released.',
                     style: TextStyle(
                       fontSize: 14.sp,
                       
@@ -52,7 +52,7 @@ class PCBBINFO extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text('SSTF',
+                  Text('PCBB',
                   style: TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold
@@ -67,7 +67,7 @@ class PCBBINFO extends StatelessWidget {
               child: Row(
                 children: [
                   Expanded(
-                    child: Text('SSTF is a secondary storage scheduling algorithm that determines the motion of the disk’s head and arm in servicing the read and write requests. SSTF acts as a disk scheduling algorithm. It selects the requests with the least seek time starting from the current head position. Scheduling priority goes to the processes with the shortest seek- even if the requests aren’t the first ones in the queue. ',
+                    child: Text('The Producer-Consumer problem is a classical multi-process synchronization problem, that is we are trying to achieve synchronization between more than one process. There is one Producer who is producing some items, whereas there is one Consumer that is consuming the items produced by the Producer. The same memory buffer is shared by both producers and consumers which is of fixed-size. The task of the Producer is to produce the item, put it into the memory buffer, and again start producing items. Whereas the task of the Consumer is to consume the item from the memory buffer',
                     style: TextStyle(
                       fontSize: 14.sp,
                       

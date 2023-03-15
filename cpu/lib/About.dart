@@ -202,10 +202,10 @@ class aboutPage extends StatelessWidget {
         child: Column(
           children: [
             profileCard('Haard Shah','Team Leader & Front-end Developer','21BCP251','https://www.linkedin.com/in/haard-shah-437a08239/'),
-             profileCard('Kashish Parmar','Backend Developer & Reviewer','21BCP273','https://haard04.github.io/haard-portfolio/#'),
-             profileCard('Dhriti Shah','Backend Developer & Tester ','21BCP253',''),
+             profileCard('Kashish Parmar','Backend Developer & Reviewer','21BCP273','https://www.linkedin.com/in/kashishparmar02'),
+             profileCard('Dhriti Shah','Backend Developer & Tester ','21BCP253','https://www.linkedin.com/in/dhriti-shah-34b608226'),
              profileCard('Shiv Patel','Data Manager','21BCP277',''),
-             profileCard('Darshil Sheth','Frontend Assitant & Backend Assitant','21BCP278',''),
+             profileCard('Darshil Sheth','Frontend Assitant & Backend Assitant','21BCP278','https://www.linkedin.com/in/darshil-sheth-453206225'),
           ],
         ),
       ),

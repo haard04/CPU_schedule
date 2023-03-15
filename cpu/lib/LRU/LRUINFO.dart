@@ -51,7 +51,7 @@ class LRUINFO extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text('SSTF',
+                  Text('LRU',
                   style: TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold
@@ -66,7 +66,7 @@ class LRUINFO extends StatelessWidget {
               child: Row(
                 children: [
                   Expanded(
-                    child: Text('SSTF is a secondary storage scheduling algorithm that determines the motion of the disk’s head and arm in servicing the read and write requests. SSTF acts as a disk scheduling algorithm. It selects the requests with the least seek time starting from the current head position. Scheduling priority goes to the processes with the shortest seek- even if the requests aren’t the first ones in the queue. ',
+                    child: Text('The LRU stands for the Least Recently Used. It keeps track of page usage in the memory over a short period of time. It works on the concept that pages that have been highly used in the past are likely to be significantly used again in the future. It removes the page that has not been utilized in the memory for the longest time. LRU is the most widely used algorithm because it provides fewer page faults than the other methods.',
                     style: TextStyle(
                       fontSize: 14.sp,
                       
