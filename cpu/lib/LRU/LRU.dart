@@ -27,23 +27,53 @@ class _LRUState extends State<LRU> {
   int frame =0;
   ListQueue<int>Buffer=ListQueue();
   int x=0;
-List<dataschema> d=[];
+List<Queue<dynamic>> data=[];
 
 int totalTime=0;
 double avgTime=0;
 
 
+void calculateLRU(ListQueue<int> Buffer, int frameCount) {
+  Queue<int> answer = Queue();
+  int pageFaults = 0;
+  int pageHits =0;
 
-
-  
-  
-  void calculate(){
-    setState(() {
-      for(int i=0;i<Buffer.length;i++){
-    d.add(dataschema(Buffer.elementAt(i), i));}
-    });
-    
+  for (int page in Buffer) {
+    // Check if the page is already in the buffer
+    if (answer.contains(page)) {
+      answer.remove(page);
+      answer.addLast(page);
+      
+      data.add(answer);
+      print(answer);
+      pageHits++;
+    } else {
+      // If the buffer is full, remove the least recently used page
+      if (answer.length == frameCount) {
+        answer.removeFirst();
+      }
+      answer.addLast(page);
+      
+      data.add(answer);
+      print(answer);
+      pageFaults++;
+    }
   }
+
+  print("Page Faults: $pageFaults");
+  print("Page Hits: $pageHits");
+  print(data);
+}
+
+  
+  
+  // void calculate(){
+  //   setState(() {
+  //     for(int i=0;i<Buffer.length;i++){
+  //   d.add(dataschema(Buffer.elementAt(i), i));}
+  //   });
+    
+  // }
 
 
 
@@ -398,7 +428,7 @@ double avgTime=0;
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  ElevatedButton(onPressed:(){ Navigator.push(context,MaterialPageRoute(builder: (context) =>  LRUOUT(frame,Buffer)));}, child:Text('Calculate'))
+                  ElevatedButton(onPressed:(){ calculateLRU(Buffer, frame); Navigator.push(context,MaterialPageRoute(builder: (context) =>  LRUOUT(frame,Buffer)));}, child:Text('Calculate'))
                 ],
               ),
             )
