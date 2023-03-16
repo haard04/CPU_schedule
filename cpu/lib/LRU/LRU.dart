@@ -27,7 +27,10 @@ class _LRUState extends State<LRU> {
   int frame =0;
   ListQueue<int>Buffer=ListQueue();
   int x=0;
-List<Queue<dynamic>> data=[];
+List<List> data=[];
+ int pageFaults = 0;
+  int pageHits =0;
+  List<String> result=[];
 
 int totalTime=0;
 double avgTime=0;
@@ -35,8 +38,7 @@ double avgTime=0;
 
 void calculateLRU(ListQueue<int> Buffer, int frameCount) {
   Queue<int> answer = Queue();
-  int pageFaults = 0;
-  int pageHits =0;
+ 
 
   for (int page in Buffer) {
     // Check if the page is already in the buffer
@@ -44,9 +46,10 @@ void calculateLRU(ListQueue<int> Buffer, int frameCount) {
       answer.remove(page);
       answer.addLast(page);
       
-      data.add(answer);
+      data.add(answer.toList());
       print(answer);
       pageHits++;
+      result.add('Hit');
     } else {
       // If the buffer is full, remove the least recently used page
       if (answer.length == frameCount) {
@@ -54,15 +57,18 @@ void calculateLRU(ListQueue<int> Buffer, int frameCount) {
       }
       answer.addLast(page);
       
-      data.add(answer);
+      data.add(answer.toList());
       print(answer);
       pageFaults++;
+      result.add('Miss');
     }
   }
 
   print("Page Faults: $pageFaults");
   print("Page Hits: $pageHits");
   print(data);
+  print(Buffer.length);
+  //print(data[0][1]);
 }
 
   
@@ -78,6 +84,10 @@ void calculateLRU(ListQueue<int> Buffer, int frameCount) {
 
 
   @override
+  final fieldText = TextEditingController();
+  void clearText() {
+    fieldText.clear();
+  }
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -360,6 +370,7 @@ void calculateLRU(ListQueue<int> Buffer, int frameCount) {
                        onChanged: (value) {
                         x=int.parse(value);
                     },
+                    controller: fieldText,
                     keyboardType: TextInputType.numberWithOptions(),
                     decoration: InputDecoration(
                 hintText: 'Value',
@@ -372,7 +383,8 @@ void calculateLRU(ListQueue<int> Buffer, int frameCount) {
                         if(x>-1){
                           print(frame);
                         Buffer.add(x);
-                        print(Buffer);
+                        // print(Buffer);
+                        clearText();
                         }
                         else{
                           
@@ -428,7 +440,7 @@ void calculateLRU(ListQueue<int> Buffer, int frameCount) {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  ElevatedButton(onPressed:(){ calculateLRU(Buffer, frame); Navigator.push(context,MaterialPageRoute(builder: (context) =>  LRUOUT(frame,Buffer)));}, child:Text('Calculate'))
+                  ElevatedButton(onPressed:(){ calculateLRU(Buffer, frame); Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (context) =>  LRUOUT(frame,Buffer,pageFaults,pageHits,data,result)),(route)=>route.isFirst);}, child:Text('Calculate'))
                 ],
               ),
             )
