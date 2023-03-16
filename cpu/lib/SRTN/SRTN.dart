@@ -294,7 +294,7 @@ void savedata(){
       _Ru.add(tempRu);
     }
 
-    view.TakeData('SRTF', _Na, _Re, _Ru, _Te, fct, _disdata, _disNum);
+    view.TakeData('SRTN', _Na, _Re, _Ru, _Te, fct, _disdata, _disNum);
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => view()),
