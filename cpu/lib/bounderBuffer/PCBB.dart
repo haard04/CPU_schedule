@@ -25,6 +25,7 @@ class _PCBBState extends State<PCBB> {
   String _consumerweight='';
   ListQueue<int>Buffer=ListQueue();
   List<String>data=[];
+  List<String> dataPCBB=[];
 
 
   int counter=1;
@@ -40,6 +41,8 @@ class _PCBBState extends State<PCBB> {
     print(_consumerweight);
     Buffer.clear();
     print(Buffer);
+    dataPCBB=[];
+    
     Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
                               builder: (context) => PCBB()),
                               (route) => route.isFirst,
@@ -57,6 +60,7 @@ class _PCBBState extends State<PCBB> {
 
                   try {
                     if(Buffer.length>0){
+                      dataPCBB.add('Consumer Consumed'+Buffer.last.toString());
                     Buffer.removeLast();}
                     else {
                      // print("FULL");
@@ -89,7 +93,7 @@ class _PCBBState extends State<PCBB> {
                   for(int i=0;i<int.parse(_producerweight);i++)
                   try{
                     if(Buffer.length<int.parse(_buffersize)){
-                    Buffer.add(counter);counter++;}
+                    Buffer.add(counter);dataPCBB.add('Producer Produced '+counter.toString());counter++;}
                     else {
                      // print("FULL");
                       showDialog(
@@ -426,7 +430,27 @@ class _PCBBState extends State<PCBB> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   ElevatedButton(onPressed: reset, child: Text('Reset')),
-                  ElevatedButton(onPressed: (){}, child: Text('Save')),
+                  ElevatedButton(onPressed: (){
+                    print(dataPCBB);
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                        return AlertDialog(
+                        content:   Text(dataPCBB.toString()),
+                         actions: [
+                          
+                           TextButton(onPressed: (){
+                             Navigator.of(context).pop();
+                           },
+                           child: Text('Ok'),
+                           )
+                        ]
+                         );});
+                  
+                  
+                  
+                  
+                  }, child: Text('Save')),
                 ],
               ),
             
