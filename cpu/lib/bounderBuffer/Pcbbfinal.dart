@@ -1,26 +1,76 @@
+import 'dart:async';
+
 import 'package:cpu/About.dart';
+import 'package:cpu/Home.dart';
 import 'package:cpu/LRU/LRU.dart';
-import 'package:cpu/bounderBuffer/PCBB.dart';
 import 'package:cpu/SRTN/SRTN.dart';
 import 'package:cpu/SSTF/SSTF.dart';
-import 'package:cpu/bounderBuffer/Pcbbfinal.dart';
+import 'package:cpu/bounderBuffer/PCBBINFO.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
-class Home extends StatefulWidget {
-  Home({Key? key}) : super(key: key);
 
+class ProducerConsumerScreenMonitor extends StatefulWidget {
   @override
-  State<Home> createState() => _HomeState();
+  _ProducerConsumerScreenMonitorState createState() => _ProducerConsumerScreenMonitorState();
 }
 
-class _HomeState extends State<Home> {
+class _ProducerConsumerScreenMonitorState extends State<ProducerConsumerScreenMonitor> {
+  final List<int> buffer = [];
+  bool producing = false;
+  int counter=0;
+  String _buffersize='';
+  List<String> dataPCBB=[];
+
+
+
+  void _produce() async {
+    producing = true;
+    while (buffer.length >= int.parse(_buffersize)) {
+      await Future.delayed(Duration(milliseconds: 500));
+    }
+    buffer.add(counter);
+    dataPCBB.add('Producer Produced '+counter.toString());
+    counter++;
+    setState(() {});
+    producing = false;
+  }
+
+  void _consume() async {
+    while (buffer.isEmpty) {
+      await Future.delayed(Duration(milliseconds: 500));
+    }
+    dataPCBB.add('Consumer consumed '+buffer.first.toString());
+    buffer.removeAt(0);
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(title:Text('CPU Simulator'),),
-      
-      drawer: Drawer(
+      appBar: AppBar(title: Text(
+        'PCBB',
+        style: TextStyle(
+          fontFamily: 'Pacifico',
+          fontWeight: FontWeight.bold
+          ),
+        ),
+        actions: <Widget>[
+          Padding(
+      padding: EdgeInsets.only(right: 20.0),
+      child: GestureDetector(
+        onTap: (){
+          Navigator.push(context,MaterialPageRoute(builder: (conText) => PCBBINFO()),);
+        },
+        child: Icon(
+            Icons.info_outline
+        ),
+      )
+    ),
+        ]
+        
+      ),
+
+    drawer: Drawer(
         width: 60.w,
           child: ListView(
 
@@ -139,6 +189,7 @@ class _HomeState extends State<Home> {
                         fontWeight: FontWeight.bold
                       ),
                     )),onTap:() {Navigator.push(context,MaterialPageRoute(builder: (context) =>  SSTF()),);},)
+                    
                   ],
                 ),
               ),
@@ -199,130 +250,125 @@ class _HomeState extends State<Home> {
               ),
               Divider(thickness: 3,color: Colors.purple,)
       ])),
+      
+
       body: Container(
-        child:GridView.count(
-             
-          crossAxisCount: 2,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            InkWell(
-          splashColor: Colors.black26,
-          onTap: () 
-            {Navigator.push(context,MaterialPageRoute(builder: (context) =>  SRTN()),);},
-             child:Column(
+            SizedBox(height: 16),
+            Padding(
+              padding: const EdgeInsets.all(20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                      Ink.image(
-                image: AssetImage('assets/cpunew.png'),
-              height: 18.h,
-              width: 40.w, 
-              fit: BoxFit.fitWidth,
+                  Expanded(
+                    child: Text('Producer Consumer Bounded Buffer Problem',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    ),
+                  )
+                ],
               ),
-                      SizedBox(height: 4,width: 40,),
-                      Text(
-                'CPU Scheduling ',
-                textAlign: TextAlign.left,
-                style: TextStyle(
-                  fontSize: 20.sp,
-                  
-                  color: Colors.black
-                ),
-              
-              ),
-
-                    ],
-             )
-                ),
-            InkWell(
-          splashColor: Colors.black26,
-          onTap: () 
-            {Navigator.push(context,MaterialPageRoute(builder: (context) =>  ProducerConsumerScreenMonitor()),);},
-             child:Column(
+            ),
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Row(
                 children: [
-                      Ink.image(
-                image: AssetImage('assets/deadlock.png'),
-              height: 18.h,
-              width: 40.w, 
-              fit: BoxFit.fitWidth,
-              ),
-              
-              SizedBox(height: 4,width: 40,),
-              Text(
-                'Deadlock ',
-                textAlign: TextAlign.left,
-                style: TextStyle(
-                  fontSize: 20.sp,
+                  Text('Buffer Size:',
+                  style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),
+                  ),
+                  Expanded(
+                child: TextField(
                   
-                  color: Colors.black
+                  onChanged: (value) {
+                    setState(() {
+                      _buffersize = value;
+                      
+                      
+                   
+                    });
+                  },
+                  keyboardType: TextInputType.numberWithOptions(),
+                  decoration: InputDecoration(
+                hintText: 'Buffer size',
+                
+              ),
                 ),
-              
               ),
               
-              ])
-             ),
-             
-            InkWell(
-                splashColor: Colors.black26,
-                onTap: ()
-                {Navigator.push(context,MaterialPageRoute(builder: (context) =>  SSTF()),);},
-                child:Column(
-                  children: [
-                    Ink.image(
-                      image: AssetImage('assets/disc.png'),
-                      height: 18.h,
-                      width: 40.w,
-                      fit: BoxFit.fitWidth,
-                    ),
-
-                    SizedBox(height: 4,width: 40,),
-                    Text(
-                      'Disc Scheduling',
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                          fontSize: 20.sp,
-
-                          color: Colors.black
-                      ),
-
-                    ),
-                  ],
-                )
+                ],
+              ),
             ),
-            InkWell(
-                splashColor: Colors.black26,
-                onTap: ()
-                {Navigator.push(context,MaterialPageRoute(builder: (context) =>  LRU()),);},
-                child:Column(
-                  children: [
-                    Ink.image(
-                      image: AssetImage('assets/page.png'),
-                      height: 18.h,
-                      width: 40.w,
-                      fit: BoxFit.fitWidth,
-                    ),
-
-                    SizedBox(height: 4,width: 40,),
-                    Text(
-                      'Page Replacement ',
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                          fontSize: 16.sp,
-
-                          color: Colors.black
-                      ),
-
-                    ),
-                  ],
-                )
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              child: Text('Buffer: ${buffer.join(', ')}',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold
+              ),
+              
+              ),
             ),
+            SizedBox(height: 16),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton(
+                  onPressed: producing ? null : _produce,
+                  child: Text('Produce'),
+                ),
+                ElevatedButton(
+                  onPressed: _consume,
+                  child: Text('Consume'),
+                ),
+              ],
+            ),
+            Padding(padding: const EdgeInsets.all(20.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  ElevatedButton(onPressed: (){
+                   Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+                              builder: (context) => ProducerConsumerScreenMonitor()),
+                              (route) => route.isFirst,
+                              );}
+                  
+                  , child: Text('Reset')),
+                  ElevatedButton(onPressed: (){
+                    
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                        return AlertDialog(
+                        content:   Text(dataPCBB.toString()),
+                         actions: [
+                          
+                           TextButton(onPressed: (){
+                             Navigator.of(context).pop();
+                           },
+                           child: Text('Ok'),
+                           )
+                        ]
+                         );});
+                  
+                  
+                  
+                  
+                  }, child: Text('Save')),
+                ],
+              ),
             
-
-
-
-
-
-          ])
+            ),
+          ],
+          
         ),
-       );
-
-    
+      ),
+    );
   }
 }
