@@ -3,9 +3,9 @@ import 'package:cpu/LRU/LRU.dart';
 import 'package:cpu/bounderBuffer/PCBB.dart';
 import 'package:cpu/SRTN/SRTN.dart';
 import 'package:cpu/SSTF/SSTF.dart';
+import 'package:cpu/ex2.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
-// CPU Scheduling is a process of determining which process will own CPU for execution while another process is on hold. The main task of CPU scheduling is to make sure that whenever the CPU remains idle, the OS at least select one of the processes available in the ready queue for execution. The selection process will be carried out by the CPU scheduler. It selects one of the processes in memory that are ready for execution.'
 class Home extends StatefulWidget {
   Home({Key? key}) : super(key: key);
 
@@ -234,7 +234,7 @@ class _HomeState extends State<Home> {
             InkWell(
           splashColor: Colors.black26,
           onTap: () 
-            {Navigator.push(context,MaterialPageRoute(builder: (context) =>  PCBB()),);},
+            {Navigator.push(context,MaterialPageRoute(builder: (context) =>  ProducerConsumerScreenMonitor()),);},
              child:Column(
                 children: [
                       Ink.image(

@@ -26,6 +26,7 @@ class _PCBBState extends State<PCBB> {
   ListQueue<int>Buffer=ListQueue();
   List<String>data=[];
   List<String> dataPCBB=[];
+  bool producing = false;
 
 
   int counter=1;
@@ -52,75 +53,24 @@ class _PCBBState extends State<PCBB> {
     
   }
 
-  void consumer(){
-                setState(() {
-                  // Update the value of the TextField.
-                  for(int i=0;i<int.parse(_consumerweight);i++)
-                  
+ 
+  void _consume() async {
+    while (Buffer.isEmpty) {
+      await Future.delayed(Duration(milliseconds: 500));
+    }
+    Buffer.remove(0);
+    setState(() {});
+  }
 
-                  try {
-                    if(Buffer.length>0){
-                      dataPCBB.add('Consumer Consumed'+Buffer.last.toString());
-                    Buffer.removeLast();}
-                    else {
-                     // print("FULL");
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                        return AlertDialog(
-                        content: Text('Buffer is Empty'),
-                         actions: [
-                          
-                           TextButton(onPressed: (){
-                             Navigator.of(context).pop();
-                           },
-                           child: Text('Ok'),
-                           )
-                        ]
-                         );});
-                         break;
-                                }
-                  } catch (e) {
-                    print(e.toString());
-                  }
-                
-                  print(_consumerweight);
-                  });
-              }
-
-  void producer(){
-                setState(() {
-                  for(int i=0;i<int.parse(_producerweight);i++)
-                  try{
-                    if(Buffer.length<int.parse(_buffersize)){
-                    Buffer.add(counter);dataPCBB.add('Producer Produced '+counter.toString());counter++;}
-                    else {
-                     // print("FULL");
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                        return AlertDialog(
-                        content: Text('Buffer is FULL!!'),
-                         actions: [
-                          
-                           ElevatedButton(onPressed: (){
-                             Navigator.of(context).pop();
-                           },
-                           child: Text('Ok'),
-                           )
-                        ]
-                         );});
-                         break;
-                                }
-                  }
-                  catch(e){
-                    print(e.toString());
-                  }
-                  
-                
-                  print(_producerweight);});
-                }
-
+  void _produce() async {
+    producing = true;
+    while (Buffer.length >= 5) {
+      await Future.delayed(Duration(milliseconds: 500));
+    }
+    Buffer.add(DateTime.now().millisecondsSinceEpoch);
+    setState(() {});
+    producing = false;
+  }
   void save(){
 
   }
@@ -331,6 +281,7 @@ class _PCBBState extends State<PCBB> {
               Divider(thickness: 3,color: Colors.purple,)
       ])),
       body: Container(
+        
         child: SingleChildScrollView(
           physics: const AlwaysScrollableScrollPhysics(),
         child: Column(
@@ -384,22 +335,22 @@ class _PCBBState extends State<PCBB> {
               padding: const EdgeInsets.all(20.0),
               child: Row(
                 children: [
-                  Expanded(
-                child: TextField(
-                  onChanged: (value) {
-                    setState(() {
-                      _producerweight = value;
+              //     Expanded(
+              //   child: TextField(
+              //     onChanged: (value) {
+              //       setState(() {
+              //         _producerweight = value;
                       
-                    });
-                  },
-                  keyboardType: TextInputType.numberWithOptions(),
-                  decoration: InputDecoration(
-                hintText: 'Producer Weight',
-              ),
-                ),
-              ),
+              //       });
+              //     },
+              //     keyboardType: TextInputType.numberWithOptions(),
+              //     decoration: InputDecoration(
+              //   hintText: 'Producer Weight',
+              // ),
+              //   ),
+              // ),
               SizedBox(width: 16.0),
-              ElevatedButton(onPressed: producer, child: Text('Producer'))
+              ElevatedButton(onPressed: producing ? null : _produce, child: Text('Producer'))
                 ],
               ),
             ),
@@ -407,21 +358,21 @@ class _PCBBState extends State<PCBB> {
               padding: const EdgeInsets.all(20.0),
               child: Row(
                 children: [
-                  Expanded(
-                child: TextField(
-                  onChanged: (value) {
-                    setState(() {
-                      _consumerweight = value;
-                    });
-                  },
-                  keyboardType: TextInputType.numberWithOptions(),
-                  decoration: InputDecoration(
-                hintText: 'consumer weight',
-              ),
-                ),
-              ),
+              //     Expanded(
+              //   child: TextField(
+              //     onChanged: (value) {
+              //       setState(() {
+              //         _consumerweight = value;
+              //       });
+              //     },
+              //     keyboardType: TextInputType.numberWithOptions(),
+              //     decoration: InputDecoration(
+              //   hintText: 'consumer weight',
+              // ),
+              //   ),
+              // ),
               SizedBox(width: 16.0),
-              ElevatedButton(onPressed: consumer, child: Text('Consumer'))
+              ElevatedButton(onPressed: _consume, child: Text('Consumer'))
                 ],
               ),
             ),
@@ -455,8 +406,9 @@ class _PCBBState extends State<PCBB> {
               ),
             
             ),
+            Row(children: [Expanded(child: Text(Buffer.toString()))],)
                 
-                for(int i=0;i<Buffer.length;i++) Wid(id: Buffer.elementAt(i),i: i,)
+               // for(int i=0;i<Buffer.length;i++) Wid(id: Buffer.elementAt(i),i: i,)
               
           ],
         ),
