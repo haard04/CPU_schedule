@@ -527,7 +527,7 @@ void saveData() async {
                    
                     calculate(); 
                                       saveData();
-                  Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (context) =>  SSTFOP(d,totalTime,avgTime,calculatedBuffer,Buffer)),(route)=>route.isFirst);
+                  Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (context) =>  SSTFOP(d,totalTime,avgTime,calculatedBuffer,Buffer)),(route)=>route.isActive);
                  }, 
                   child:Text('Calculate'))
                 ],

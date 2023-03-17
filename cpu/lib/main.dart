@@ -1,4 +1,5 @@
 import 'package:cpu/Home.dart';
+import 'package:cpu/landingPage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
        
         primarySwatch: Colors.purple ,
       ),
-      home:  Home(),
+      home:    splashScreen(),
     );
   });}}
     
