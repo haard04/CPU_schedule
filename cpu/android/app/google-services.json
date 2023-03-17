@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1092242218943",
+    "project_id": "os-simulator-d5aaf",
+    "storage_bucket": "os-simulator-d5aaf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1092242218943:android:ff5a43d1c11f721324cb0a",
+        "android_client_info": {
+          "package_name": "com.example.cpu"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1092242218943-t70hrdrnr8659t1ha8q24pugumulvbr9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAqAKgrvH1-QnEO7Omn3ugaMB09TiY8dIM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1092242218943-t70hrdrnr8659t1ha8q24pugumulvbr9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

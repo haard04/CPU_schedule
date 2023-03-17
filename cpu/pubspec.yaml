@@ -40,6 +40,10 @@ dependencies:
   font_awesome_flutter: ^10.4.0
   syncfusion_flutter_charts: ^20.4.52
   url_launcher: ^6.1.10
+  firebase_core: ^2.8.0
+  cloud_firestore: ^4.4.5
+  upgrader: ^6.2.0
+  collection: ^1.17.1
 
 dev_dependencies:
   flutter_test:

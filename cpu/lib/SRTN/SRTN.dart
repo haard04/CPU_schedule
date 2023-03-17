@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cpu/About.dart';
 import 'package:cpu/Home.dart';
 import 'package:cpu/LRU/LRU.dart';
@@ -9,6 +10,7 @@ import 'package:cpu/SRTN/card.dart';
 import 'package:cpu/SRTN/view.dart';
 import 'package:cpu/SSTF/SSTF.dart';
 import 'package:cpu/bounderBuffer/PCBB.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'dart:collection';
 import 'package:sizer/sizer.dart';
@@ -33,7 +35,7 @@ class _SRTNState extends State<SRTN> {
   List<String> _Na = [], _Re = [], _Ru = [], _Te = [];
   List<List<Widget>> _disdata = [], _disNum = [];
 
-void savedata(){
+void savedata()async{
   double tat,wt;
   List<List<String>> process=[];
   tat=_avg_tat.toDouble();
@@ -42,7 +44,29 @@ void savedata(){
   print(_datas);
   print(tat);
   print(wt);
+  for(int i=0;i<_datas.length;i++){
+    _datas[i][1]=_data[i][1].toString();
+  }
+
+ 
+
+try {
+    // Get a reference to the Firestore collection named "srtn"
+    CollectionReference srtnCollection = FirebaseFirestore.instance.collection('srtn/');
+    
+    // Create a new document in the "srtn" collection and set its data
+    await srtnCollection.add({
+      'Data': _datas.toString(),
+      'AvgTat': _avg_tat.toString(),
+      'AvgWt':_avg_wt.toString()
+    });
+    
+    print('Strings added to "srtn" collection in Firestore');
+  } catch (e) {
+    print('Error adding strings to "srtn" collection in Firestore: $e');
+  }
 }
+
 
   void _addrow() {
     setState(() {
@@ -143,6 +167,7 @@ void savedata(){
   }
 
   void _viz() {
+    savedata();
     int fct = 0;
     for (int i = 0; i < _counter; ++i) {
       fct = max(fct, _data[i][2]);

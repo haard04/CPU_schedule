@@ -1,10 +1,13 @@
 import 'package:cpu/Home.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
-void main(){
+void main() async {
+   WidgetsFlutterBinding.ensureInitialized();
 
-  runApp(MaterialApp(title: 'CPU Simulator',home: MyApp(),) );
+  await Firebase.initializeApp();
+  runApp(MyApp(), );
 }
 
 class MyApp extends StatelessWidget {
