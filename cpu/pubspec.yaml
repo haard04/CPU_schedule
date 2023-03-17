@@ -43,7 +43,7 @@ dependencies:
   firebase_core: ^2.8.0
   cloud_firestore: ^4.4.5
   upgrader: ^6.2.0
-  collection: ^1.17.1
+  collection: ^1.16.0
 
 dev_dependencies:
   flutter_test:
@@ -73,6 +73,10 @@ flutter:
     - assets/deadlock.png
     - assets/disc.png
     - assets/page.png
+    - assets/1.png
+    - assets/2.png
+    - assets/3.png
+    - assets/4.png
      
      
        #   - images/a_dot_ham.jpeg

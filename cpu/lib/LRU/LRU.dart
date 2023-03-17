@@ -150,7 +150,7 @@ void calculateLRU(ListQueue<int> Buffer, int frameCount) {
                   ),
                 ),
               ),
-              Divider(thickness: 3,color: Colors.purple,),
+              Divider(thickness: 1,color: Colors.purple,),
 
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -176,7 +176,7 @@ void calculateLRU(ListQueue<int> Buffer, int frameCount) {
                   ],
                 ),
               ),
-              Divider(thickness: 3,color: Colors.purple,),
+              Divider(thickness: 1,color: Colors.purple,),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Row(
@@ -273,9 +273,9 @@ void calculateLRU(ListQueue<int> Buffer, int frameCount) {
                   ],
                 ),
               ),
-              Divider(thickness: 3,color: Colors.purple,),
+              Divider(thickness: 1,color: Colors.purple,),
               Padding(padding: const EdgeInsets.fromLTRB(0, 280, 0, 0),
-              child:Divider(thickness: 3,color: Colors.purple,),),
+              child:Divider(thickness: 1,color: Colors.purple,),),
              
               Padding(
                 padding: const EdgeInsets.fromLTRB(0,0,0,0),
@@ -304,7 +304,7 @@ void calculateLRU(ListQueue<int> Buffer, int frameCount) {
                 ),
                 
               ),
-              Divider(thickness: 3,color: Colors.purple,)
+              Divider(thickness: 1,color: Colors.purple,)
       ])),
       body: Container(
         child: Column(

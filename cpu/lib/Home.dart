@@ -43,7 +43,7 @@ class _HomeState extends State<Home> {
                   ),
                 ),
               ),
-              Divider(thickness: 3,color: Colors.purple,),
+              Divider(thickness: 1,color: Colors.purple,),
 
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -69,7 +69,7 @@ class _HomeState extends State<Home> {
                   ],
                 ),
               ),
-              Divider(thickness: 3,color: Colors.purple,),
+              Divider(thickness: 1,color: Colors.purple,),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Row(
@@ -166,9 +166,9 @@ class _HomeState extends State<Home> {
                   ],
                 ),
               ),
-              Divider(thickness: 3,color: Colors.purple,),
+              Divider(thickness: 1,color: Colors.purple,),
               Padding(padding: const EdgeInsets.fromLTRB(0, 280, 0, 0),
-              child:Divider(thickness: 3,color: Colors.purple,),),
+              child:Divider(thickness: 1,color: Colors.purple,),),
              
               Padding(
                 padding: const EdgeInsets.fromLTRB(0,0,0,0),
@@ -197,7 +197,7 @@ class _HomeState extends State<Home> {
                 ),
                 
               ),
-              Divider(thickness: 3,color: Colors.purple,)
+              Divider(thickness: 1,color: Colors.purple,)
       ])),
       body: Container(
         child:GridView.count(
@@ -211,7 +211,7 @@ class _HomeState extends State<Home> {
              child:Column(
                 children: [
                       Ink.image(
-                image: AssetImage('assets/cpunew.png'),
+                image: AssetImage('assets/1.png'),
               height: 18.h,
               width: 40.w, 
               fit: BoxFit.fitWidth,
@@ -238,7 +238,7 @@ class _HomeState extends State<Home> {
              child:Column(
                 children: [
                       Ink.image(
-                image: AssetImage('assets/deadlock.png'),
+                image: AssetImage('assets/2.png'),
               height: 18.h,
               width: 40.w, 
               fit: BoxFit.fitWidth,
@@ -266,7 +266,7 @@ class _HomeState extends State<Home> {
                 child:Column(
                   children: [
                     Ink.image(
-                      image: AssetImage('assets/disc.png'),
+                      image: AssetImage('assets/3.png'),
                       height: 18.h,
                       width: 40.w,
                       fit: BoxFit.fitWidth,
@@ -293,7 +293,7 @@ class _HomeState extends State<Home> {
                 child:Column(
                   children: [
                     Ink.image(
-                      image: AssetImage('assets/page.png'),
+                      image: AssetImage('assets/4.png'),
                       height: 18.h,
                       width: 40.w,
                       fit: BoxFit.fitWidth,

@@ -40,7 +40,7 @@ class aboutPage extends StatelessWidget {
                   ),
                 ),
               ),
-              Divider(thickness: 3,color: Colors.purple,),
+              Divider(thickness: 1,color: Colors.purple,),
 
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -66,7 +66,7 @@ class aboutPage extends StatelessWidget {
                   ],
                 ),
               ),
-              Divider(thickness: 3,color: Colors.purple,),
+              Divider(thickness: 1,color: Colors.purple,),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Row(
@@ -163,9 +163,9 @@ class aboutPage extends StatelessWidget {
                   ],
                 ),
               ),
-              Divider(thickness: 3,color: Colors.purple,),
+              Divider(thickness: 1,color: Colors.purple,),
               Padding(padding: const EdgeInsets.fromLTRB(0, 280, 0, 0),
-              child:Divider(thickness: 3,color: Colors.purple,),),
+              child:Divider(thickness: 1,color: Colors.purple,),),
              
               Padding(
                 padding: const EdgeInsets.fromLTRB(0,0,0,0),
@@ -194,7 +194,7 @@ class aboutPage extends StatelessWidget {
                 ),
                 
               ),
-              Divider(thickness: 3,color: Colors.purple,)
+              Divider(thickness: 1,color: Colors.purple,)
       ])),
       body: Container(
         child:SingleChildScrollView(
