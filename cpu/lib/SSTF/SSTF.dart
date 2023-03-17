@@ -1,5 +1,6 @@
 import 'dart:collection';
 //  d.add(dataschema(Buffer.elementAt(i), i));
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cpu/About.dart';
 import 'package:cpu/Home.dart';
 import 'package:cpu/LRU/LRU.dart';
@@ -34,15 +35,38 @@ class _SSTFState extends State<SSTF> {
   int head =0;
   ListQueue<int>Buffer=ListQueue();
   ListQueue<int> calculatedBuffer =ListQueue();
+  List<int> inputQueue=[];
   
   int x=0;
 List<dataschema> d=[];
 
 int totalTime=0;
 double avgTime=0;
+ListQueue<int> finalQueue=ListQueue();
 
 
 
+void saveData() async {
+  try {
+    // Get a reference to the Firestore collection named "srtn"
+    CollectionReference srtnCollection = FirebaseFirestore.instance.collection('sstf/');
+    
+    // Create a new document in the "srtn" collection and set its data
+    await srtnCollection.add({
+      'Size': size,
+      'Head':finalQueue.first,
+      'Queue': inputQueue.toString(),
+      'Calculated Queue':finalQueue.toString(),
+      'Total Time': totalTime,
+      'Avg Time':avgTime
+      
+    });
+    
+    print('Strings added to "srtn" collection in Firestore');
+  } catch (e) {
+    print('Error adding strings to "srtn" collection in Firestore: $e');
+  }
+}
 
 
 
@@ -54,18 +78,21 @@ double avgTime=0;
   
   void calculate(){
     setState(() {
+      
+      finalQueue.add(head);
       int counter=0;
       d.add(dataschema(head,counter));
       counter++;
       
       calculatedBuffer=Buffer;
-      
+      inputQueue=Buffer.toList();
       int l=Buffer.length;
       int  min,x; 
       while((calculatedBuffer.isNotEmpty)){
         min = (head-calculatedBuffer.elementAt(0)).abs(); x=0;
         for(int i=0; i<calculatedBuffer.length; i++){
             if((head-calculatedBuffer.elementAt(i)).abs()<min){
+              
                 min=(head-calculatedBuffer.elementAt(i)).abs(); x=i;
             }
         }
@@ -74,6 +101,7 @@ double avgTime=0;
         print(totalTime);
         d.add(dataschema(calculatedBuffer.elementAt(x),counter));
         counter++;
+        finalQueue.add(calculatedBuffer.elementAt(x));
         calculatedBuffer.remove(calculatedBuffer.elementAt(x));
         
     }
@@ -81,6 +109,9 @@ double avgTime=0;
     
     });
     print(d);
+    print('inputQueue'+inputQueue.toString());
+    print('Cal Buffer'+calculatedBuffer.toString());
+    print('Buffer'+Buffer.toString());
     
   }
 
@@ -492,8 +523,12 @@ double avgTime=0;
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  ElevatedButton(onPressed:(){calculate(); 
-                  Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (context) =>  SSTFOP(d,totalTime,avgTime,calculatedBuffer,Buffer)),(route)=>route.isFirst);}, 
+                  ElevatedButton(onPressed:(){
+                   
+                    calculate(); 
+                                      saveData();
+                  Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (context) =>  SSTFOP(d,totalTime,avgTime,calculatedBuffer,Buffer)),(route)=>route.isFirst);
+                 }, 
                   child:Text('Calculate'))
                 ],
               ),

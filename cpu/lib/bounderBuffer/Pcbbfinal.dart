@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cpu/About.dart';
 import 'package:cpu/Home.dart';
 import 'package:cpu/LRU/LRU.dart';
@@ -21,7 +22,39 @@ class _ProducerConsumerScreenMonitorState extends State<ProducerConsumerScreenMo
   String _buffersize='';
   List<String> dataPCBB=[];
 
+void saveData() async{
+  try {
+    // Get a reference to the Firestore collection named "srtn"
+    CollectionReference srtnCollection = FirebaseFirestore.instance.collection('pcbb/');
+    
+    // Create a new document in the "srtn" collection and set its data
+    await srtnCollection.add({
+      'Data': dataPCBB.toString(),
+      
+    });
+    
+    print('Strings added to "srtn" collection in Firestore');
+  } catch (e) {
+    print('Error adding strings to "srtn" collection in Firestore: $e');
+  }
 
+  showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                        return AlertDialog(
+                        content:   Text(dataPCBB.toString()),
+                         actions: [
+                          
+                           TextButton(onPressed: (){
+                             Navigator.of(context).pop();
+                           },
+                           child: Text('Ok'),
+                           )
+                        ]
+                         );});
+
+
+}
 
   void _produce() async {
     producing = true;
@@ -341,24 +374,7 @@ class _ProducerConsumerScreenMonitorState extends State<ProducerConsumerScreenMo
                   
                   , child: Text('Reset')),
                   ElevatedButton(onPressed: (){
-                    
-                    showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                        return AlertDialog(
-                        content:   Text(dataPCBB.toString()),
-                         actions: [
-                          
-                           TextButton(onPressed: (){
-                             Navigator.of(context).pop();
-                           },
-                           child: Text('Ok'),
-                           )
-                        ]
-                         );});
-                  
-                  
-                  
+                    saveData();
                   
                   }, child: Text('Save')),
                 ],
