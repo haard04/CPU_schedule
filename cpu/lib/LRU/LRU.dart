@@ -1,5 +1,7 @@
-import 'dart:collection';
+/*  LRU(Least Recently Used Paging Algorithm)  */
 
+/* Importing required packages for the same  */
+import 'dart:collection';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cpu/About.dart';
 import 'package:cpu/Home.dart';
@@ -38,15 +40,23 @@ double avgTime=0;
 
 List<int>inputQueue=[];
 
+/* 
+"calculateLRU()" : function for calculating wheather the given data in queue 
+                    is a 'HIT' or 'MISS'.    
 
+                 ->'HIT' occurs when a process requests a page that is already
+                  present in the main memory. 
+                  ->'MISS' occurs when a process requests a page that is not 
+                  present in the main memory .                     
+ */
 void calculateLRU(ListQueue<int> Buffer, int frameCount) {
   inputQueue=Buffer.toList();
   Queue<int> answer = Queue();
  
 
   for (int page in Buffer) {
-    // Check if the page is already in the buffer
-    if (answer.contains(page)) {
+// Checking if the page is already in the buffer.
+    if (answer.contains(page)) { 
       answer.remove(page);
       answer.addLast(page);
       
@@ -55,8 +65,8 @@ void calculateLRU(ListQueue<int> Buffer, int frameCount) {
       pageHits++;
       result.add('Hit');
     } else {
-      // If the buffer is full, remove the least recently used page
-      if (answer.length == frameCount) {
+   // If the buffer is full, remove the least recently used page.   
+      if (answer.length == frameCount) { 
         answer.removeFirst();
       }
       answer.addLast(page);
@@ -68,15 +78,25 @@ void calculateLRU(ListQueue<int> Buffer, int frameCount) {
     }
   }
 
-  print("Page Faults: $pageFaults");
-  print("Page Hits: $pageHits");
+  print("Page Faults: $pageFaults");   //  page MISS
+  print("Page Hits: $pageHits");      // page HIT
   print(data);
   print(Buffer.length);
-  //print(data[0][1]);
 }
 
   
-  
+  /* 
+    "saveData()" : connecting the app data to the main database. here we have
+                   used 'CLOUD FIREBASE'.
+
+                   ->The data is saved in JSON (JavaScript Object Notation).
+                   ->DATA Format :{    'Frames': (string format),     
+                                       'Queue': (string format),     
+                                       'Result Data': (string format),    
+                                       'Result': (string format),     
+                                       'TotalHIts': (string format),   
+                                       'Total Miss': (string format)    }
+  */
   void saveData() async {
     try {
     // Get a reference to the Firestore collection named "srtn"
@@ -456,7 +476,7 @@ void calculateLRU(ListQueue<int> Buffer, int frameCount) {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  ElevatedButton(onPressed:(){  calculateLRU(Buffer, frame);saveData(); Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (context) =>  LRUOUT(frame,Buffer,pageFaults,pageHits,data,result)),(route)=>route.isFirst);}, child:Text('Calculate'))
+                  ElevatedButton(onPressed:(){  calculateLRU(Buffer, frame);saveData(); Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (context) =>  LRUOUT(frame,Buffer,pageFaults,pageHits,data,result)),(route)=>route.isActive);}, child:Text('Calculate'))
                 ],
               ),
             )
@@ -468,4 +488,3 @@ void calculateLRU(ListQueue<int> Buffer, int frameCount) {
     );
   }
 }
-
