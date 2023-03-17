@@ -1,5 +1,6 @@
 import 'dart:collection';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cpu/About.dart';
 import 'package:cpu/Home.dart';
 import 'package:cpu/LRU/LRUINFO.dart';
@@ -35,8 +36,11 @@ List<List> data=[];
 int totalTime=0;
 double avgTime=0;
 
+List<int>inputQueue=[];
+
 
 void calculateLRU(ListQueue<int> Buffer, int frameCount) {
+  inputQueue=Buffer.toList();
   Queue<int> answer = Queue();
  
 
@@ -73,14 +77,26 @@ void calculateLRU(ListQueue<int> Buffer, int frameCount) {
 
   
   
-  // void calculate(){
-  //   setState(() {
-  //     for(int i=0;i<Buffer.length;i++){
-  //   d.add(dataschema(Buffer.elementAt(i), i));}
-  //   });
+  void saveData() async {
+    try {
+    // Get a reference to the Firestore collection named "srtn"
+    CollectionReference srtnCollection = FirebaseFirestore.instance.collection('lru/');
     
-  // }
-
+    // Create a new document in the "srtn" collection and set its data
+    await srtnCollection.add({
+      'Frames': frame.toString(),
+      'Queue': inputQueue.toString(),
+      'Result Data':data.toString(),
+      'Result':result.toString(),
+      'Total Hits':pageHits,
+      'Total Miss':pageFaults
+    });
+    
+    print('Strings added to "srtn" collection in Firestore');
+  } catch (e) {
+    print('Error adding strings to "srtn" collection in Firestore: $e');
+  }
+  }
 
 
   @override
@@ -440,7 +456,7 @@ void calculateLRU(ListQueue<int> Buffer, int frameCount) {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  ElevatedButton(onPressed:(){ calculateLRU(Buffer, frame); Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (context) =>  LRUOUT(frame,Buffer,pageFaults,pageHits,data,result)),(route)=>route.isFirst);}, child:Text('Calculate'))
+                  ElevatedButton(onPressed:(){  calculateLRU(Buffer, frame);saveData(); Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (context) =>  LRUOUT(frame,Buffer,pageFaults,pageHits,data,result)),(route)=>route.isFirst);}, child:Text('Calculate'))
                 ],
               ),
             )
