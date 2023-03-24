@@ -99,10 +99,10 @@ void calculateLRU(ListQueue<int> Buffer, int frameCount) {
   */
   void saveData() async {
     try {
-    // Get a reference to the Firestore collection named "srtn"
+    
     CollectionReference srtnCollection = FirebaseFirestore.instance.collection('lru/');
     
-    // Create a new document in the "srtn" collection and set its data
+   
     await srtnCollection.add({
       'Frames': frame.toString(),
       'Queue': inputQueue.toString(),
@@ -112,28 +112,30 @@ void calculateLRU(ListQueue<int> Buffer, int frameCount) {
       'Total Miss':pageFaults
     });
     
-    print('Strings added to "srtn" collection in Firestore');
+    print('Strings added to "LRU" collection in Firestore');
   } catch (e) {
-    print('Error adding strings to "srtn" collection in Firestore: $e');
+    print('Error adding strings to "LRU" collection in Firestore: $e');
   }
   }
 
 
   @override
   final fieldText = TextEditingController();
-  void clearText() {
+  void clearText() {// Function to clear text
     fieldText.clear();
   }
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Page Replacement Algorithm ',
+      appBar: AppBar( // Function for app bar
+        title: Text('Page Replacement Algorithm ', 
         style:TextStyle(
           fontFamily: 'Pacifico', fontWeight: FontWeight.bold
           ),
         ),
 
-        actions: <Widget>[
+
+ 
+        actions: <Widget>[     // navigates to the 'info' page
           Padding(
       padding: EdgeInsets.only(right: 20.0),
       child: GestureDetector(
@@ -147,7 +149,9 @@ void calculateLRU(ListQueue<int> Buffer, int frameCount) {
     ),
         ]
       ),
-      drawer: Drawer(
+     
+     // side drawer for redirecting to other algorithms and the home page
+      drawer: Drawer( 
         width: 60.w,
           child: ListView(
 
@@ -326,6 +330,7 @@ void calculateLRU(ListQueue<int> Buffer, int frameCount) {
               ),
               Divider(thickness: 1,color: Colors.purple,)
       ])),
+      
       body: Container(
         child: Column(
           children: [
@@ -488,4 +493,3 @@ void calculateLRU(ListQueue<int> Buffer, int frameCount) {
     );
   }
 }
-

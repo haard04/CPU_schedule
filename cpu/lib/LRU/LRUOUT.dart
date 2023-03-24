@@ -16,7 +16,7 @@ class LRUOUT extends StatelessWidget {
    LRUOUT(this.frame,this.Buffer,this.pageFaults,this.pageHits,this.data,this.result,{Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) { //  using data to create the chart for the same entries in LRU
 
     final List<ChartData> chartData = [
             ChartData('Hit', pageHits.toDouble()),
@@ -24,7 +24,7 @@ class LRUOUT extends StatelessWidget {
             ChartData('Miss', pageFaults.toDouble())
         ];
 
-    return Scaffold(
+    return Scaffold(// appbar for 'Results'
       appBar: AppBar(
         title: Text('Results'),
 
@@ -35,8 +35,8 @@ class LRUOUT extends StatelessWidget {
             Row(
               children: [
                 Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Container(
+                  padding: const EdgeInsets.all(20.0),   // Creating the output ina tabular form for entries.
+                  child: Container(  // Seting up the parametetrs for the the table such as the width, height and text alignment for each cell.
                     child:SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       child: Table(
@@ -70,7 +70,7 @@ class LRUOUT extends StatelessWidget {
 
 
                             Text(result[i],textAlign: TextAlign.center,style: TextStyle(
-                               
+                               // adding 'Hit' and 'Miss' cours and to the table entry
                               color: (result[i]=='Hit')? Colors.green : Colors.red,
                               fontWeight: FontWeight.bold,
                               fontSize: 16
@@ -92,19 +92,19 @@ class LRUOUT extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Row(children: [
+              child: Row(children: [    //  counting no of 'Hits'
                 Text('Total Hit:'+pageHits.toString(),style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18),),
         ],),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Row(children: [
+              child: Row(children: [     //  counting no of 'Miss'
                 Text('Total Miss:'+pageFaults.toString(),style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18),),
         ],),
             ),
 
 
-            SfCircularChart(
+            SfCircularChart(     // Displaying the hit miss ratio in a visual pie chart representation 
               legend: Legend(isVisible: true),
               tooltipBehavior: TooltipBehavior(enable: true),
               title: ChartTitle(text:'Hit-Miss Ratio',textStyle: TextStyle(fontWeight: FontWeight.bold) ),
