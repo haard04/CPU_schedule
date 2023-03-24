@@ -30,7 +30,9 @@ class LRUOUT extends StatelessWidget {
 
       ),
       body: Container(
-        child: Column(
+        child:SingleChildScrollView(//scroller enabled
+          physics: const AlwaysScrollableScrollPhysics(),
+             child: Column(
           children: [
             Row(
               children: [
@@ -121,6 +123,8 @@ class LRUOUT extends StatelessWidget {
             )
           ],
         ),
+     
+        )
         
         
       ),

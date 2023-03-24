@@ -388,7 +388,7 @@ void calculateLRU(ListQueue<int> Buffer, int frameCount) {
               padding: const EdgeInsets.all(10.0),
               child: Row(
                   children: [
-                    Text('Queue: '+Buffer.toString(),style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),)
+                    Expanded(child: Text('Queue: '+Buffer.toString(),style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),))
                   ],
               ),
             ),
