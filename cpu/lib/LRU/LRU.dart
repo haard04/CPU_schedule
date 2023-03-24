@@ -442,7 +442,9 @@ void calculateLRU(ListQueue<int> Buffer, int frameCount) {
                            child: Text('Ok'),
                            )
                         ]
-                         );});}});},
+                         );});
+                         }});
+                         },
                      child: Text('ADD')),
 
 
@@ -487,7 +489,9 @@ void calculateLRU(ListQueue<int> Buffer, int frameCount) {
                   onPressed:()
                   
                   {
-                      calculateLRU(Buffer, frame);saveData(); Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (context) =>  LRUOUT(frame,Buffer,pageFaults,pageHits,data,result)),(route)=>route.isActive);
+                      calculateLRU(Buffer, frame);
+                      saveData(); 
+                      Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (context) =>  LRUOUT(frame,Buffer,pageFaults,pageHits,data,result)),(route)=>route.isActive);
                       },
                       
                       child:Text('Calculate'))
