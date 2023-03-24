@@ -481,7 +481,17 @@ void calculateLRU(ListQueue<int> Buffer, int frameCount) {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  ElevatedButton(onPressed:(){  calculateLRU(Buffer, frame);saveData(); Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (context) =>  LRUOUT(frame,Buffer,pageFaults,pageHits,data,result)),(route)=>route.isActive);}, child:Text('Calculate'))
+                   (frame>0)?
+                  ElevatedButton(
+                   
+                  onPressed:()
+                  
+                  {
+                      calculateLRU(Buffer, frame);saveData(); Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (context) =>  LRUOUT(frame,Buffer,pageFaults,pageHits,data,result)),(route)=>route.isActive);
+                      },
+                      
+                      child:Text('Calculate'))
+                      :Text(''),
                 ],
               ),
             )
