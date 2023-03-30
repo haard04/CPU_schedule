@@ -34,6 +34,8 @@ List<List> data=[];
  int pageFaults = 0;
   int pageHits =0;
   List<String> result=[];
+  String given='';
+  List<String> givenstr=[];
 
 int totalTime=0;
 double avgTime=0;
@@ -355,7 +357,9 @@ void calculateLRU(ListQueue<int> Buffer, int frameCount) {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 
                 children: [
+                  
                   Text(
+                    
                     'No of Frames:  ',
                     style: TextStyle(
                       fontSize: 20,
@@ -384,14 +388,14 @@ void calculateLRU(ListQueue<int> Buffer, int frameCount) {
                 ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Row(
-                  children: [
-                    Expanded(child: Text('Queue: '+Buffer.toString(),style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),))
-                  ],
-              ),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.all(10.0),
+            //   child: Row(
+            //       children: [
+            //         Expanded(child: Text('Queue: '+Buffer.toString(),style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),))
+            //       ],
+            //   ),
+            // ),
             Padding(
               padding: const EdgeInsets.fromLTRB(20,0,20,10),
               child: Row(
@@ -405,11 +409,13 @@ void calculateLRU(ListQueue<int> Buffer, int frameCount) {
                     ),
                   ),
                   SizedBox(
-                    width: 80,
+                    width: 180,
                     child: TextField(
                       
                        onChanged: (value) {
-                        x=int.parse(value);
+                       // x=int.parse(value);
+                       given=value;
+                        
                     },
                     controller: fieldText,
                     keyboardType: TextInputType.numberWithOptions(),
@@ -419,60 +425,60 @@ void calculateLRU(ListQueue<int> Buffer, int frameCount) {
               ),
                     ),
                   ),
-                  ElevatedButton(
-                    onPressed:(){ setState(() {
-                        if(x>-1){
-                          print(frame);
-                        Buffer.add(x);
-                        // print(Buffer);
-                        clearText();
-                        }
-                        else{
+                  // ElevatedButton(
+                  //   onPressed:(){ setState(() {
+                  //       if(x>-1){
+                  //         print(frame);
+                  //       Buffer.add(x);
+                  //       // print(Buffer);
+                  //       clearText();
+                  //       }
+                  //       else{
                           
-                          showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                        return AlertDialog(
-                        content: Text('Please select Proper value'),
-                         actions: [
+                  //         showDialog(
+                  //       context: context,
+                  //       builder: (BuildContext context) {
+                  //       return AlertDialog(
+                  //       content: Text('Please select Proper value'),
+                  //        actions: [
                           
-                           ElevatedButton(onPressed: (){
-                             Navigator.of(context).pop();
-                           },
-                           child: Text('Ok'),
-                           )
-                        ]
-                         );});
-                         }});
-                         },
-                     child: Text('ADD')),
+                  //          ElevatedButton(onPressed: (){
+                  //            Navigator.of(context).pop();
+                  //          },
+                  //          child: Text('Ok'),
+                  //          )
+                  //       ]
+                  //        );});
+                  //        }});
+                  //        },
+                  //    child: Text('ADD')),
 
 
-                     Padding(
-                       padding: const EdgeInsets.all(8.0),
-                       child: ElevatedButton(onPressed: (() {
-                         setState(() {
-                          if(Buffer.length>0){
-                            Buffer.removeLast();
-                          }
-                          else{
+                  //    Padding(
+                  //      padding: const EdgeInsets.all(8.0),
+                  //      child: ElevatedButton(onPressed: (() {
+                  //        setState(() {
+                  //         if(Buffer.length>0){
+                  //           Buffer.removeLast();
+                  //         }
+                  //         else{
                             
-                            showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                          return AlertDialog(
-                          content: Text('Queue is Empty'),
-                           actions: [
+                  //           showDialog(
+                  //         context: context,
+                  //         builder: (BuildContext context) {
+                  //         return AlertDialog(
+                  //         content: Text('Queue is Empty'),
+                  //          actions: [
                             
-                             ElevatedButton(onPressed: (){
-                               Navigator.of(context).pop();
-                             },
-                             child: Text('Ok'),
-                             )
-                          ]
-                           );});}});}
-                       ), child: Text('POP')),
-                     )
+                  //            ElevatedButton(onPressed: (){
+                  //              Navigator.of(context).pop();
+                  //            },
+                  //            child: Text('Ok'),
+                  //            )
+                  //         ]
+                  //          );});}});}
+                  //      ), child: Text('POP')),
+                  //    )
                 ],
               ),
             ),
@@ -489,6 +495,10 @@ void calculateLRU(ListQueue<int> Buffer, int frameCount) {
                   onPressed:()
                   
                   {
+                    givenstr=given.split(',');
+                    for(int i=0;i<givenstr.length;i++){
+                      Buffer.add(int.parse(givenstr[i]));
+                    }
                       calculateLRU(Buffer, frame);
                       saveData(); 
                       Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (context) =>  LRUOUT(frame,Buffer,pageFaults,pageHits,data,result)),(route)=>route.isActive);

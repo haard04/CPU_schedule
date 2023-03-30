@@ -62,22 +62,7 @@ void saveData() async{
       await Future.delayed(Duration(milliseconds: 500));
     }
     buffer.add(counter);
-     showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                        return AlertDialog(
-                        content:   Text("tester".toString()),
-                         actions: [
-                          
-                           TextButton(onPressed: (){
-                             Navigator.of(context).pop();
-                           },
-                           child: Text('Ok'),
-                           )
-                        ]
-                         );});
-
-
+     
 
     dataPCBB.add('Producer Produced '+counter.toString());
     counter++;
