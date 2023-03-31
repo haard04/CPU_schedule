@@ -39,6 +39,8 @@ class _SSTFState extends State<SSTF> {
   
   int x=0;
 List<dataschema> d=[];
+String given='';
+  List<String> givenstr=[];
 
 int totalTime=0;
 double avgTime=0;
@@ -425,14 +427,14 @@ void saveData() async {
                 ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Row(
-                  children: [
-                    Text('Queue: '+Buffer.toString(),style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),)
-                  ],
-              ),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.all(10.0),
+            //   child: Row(
+            //       children: [
+            //         Text('Queue: '+Buffer.toString(),style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),)
+            //       ],
+            //   ),
+            // ),
             Padding(
               padding: const EdgeInsets.fromLTRB(20,0,20,10),
               child: Row(
@@ -446,11 +448,12 @@ void saveData() async {
                     ),
                   ),
                   SizedBox(
-                    width: 80,
+                    width: 240,
                     child: TextField(
                       
                        onChanged: (value) {
-                        x=int.parse(value);
+                        //x=int.parse(value);
+                        given=value;
                     },
                     controller: fieldText,
                     keyboardType: TextInputType.numberWithOptions(),
@@ -460,62 +463,62 @@ void saveData() async {
               ),
                     ),
                   ),
-                  ElevatedButton(
-                    onPressed:(){ setState(() {
-                        if(x<size&&x>-1){
-                          print(size);
-                        Buffer.add(x);
-                        clearText();
-                        print(Buffer);
-                        }
-                        else{
+            //       ElevatedButton(
+            //         onPressed:(){ setState(() {
+            //             if(x<size&&x>-1){
+            //               print(size);
+            //             Buffer.add(x);
+            //             clearText();
+            //             print(Buffer);
+            //             }
+            //             else{
                           
-                          showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                        return AlertDialog(
-                        content: Text('Please select Proper value'),
-                         actions: [
+            //               showDialog(
+            //             context: context,
+            //             builder: (BuildContext context) {
+            //             return AlertDialog(
+            //             content: Text('Please select Proper value'),
+            //              actions: [
                           
-                           ElevatedButton(onPressed: (){
-                             Navigator.of(context).pop();
-                           },
-                           child: Text('Ok'),
-                           )
-                        ]
-                         );});}});},
-                     child: Text('ADD')),
+            //                ElevatedButton(onPressed: (){
+            //                  Navigator.of(context).pop();
+            //                },
+            //                child: Text('Ok'),
+            //                )
+            //             ]
+            //              );});}});},
+            //          child: Text('ADD')),
 
 
-                     Padding(
-                       padding: const EdgeInsets.all(8.0),
-                       child: ElevatedButton(onPressed: (() {
-                         setState(() {
-                          if(Buffer.length>0){
-                            Buffer.removeLast();
-                            clearText();
-                          }
-                          else{
+            //          Padding(
+            //            padding: const EdgeInsets.all(8.0),
+            //            child: ElevatedButton(onPressed: (() {
+            //              setState(() {
+            //               if(Buffer.length>0){
+            //                 Buffer.removeLast();
+            //                 clearText();
+            //               }
+            //               else{
                             
-                            showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                          return AlertDialog(
-                          content: Text('Queue is Empty'),
-                           actions: [
+            //                 showDialog(
+            //               context: context,
+            //               builder: (BuildContext context) {
+            //               return AlertDialog(
+            //               content: Text('Queue is Empty'),
+            //                actions: [
                             
-                             ElevatedButton(onPressed: (){
-                               Navigator.of(context).pop();
-                             },
-                             child: Text('Ok'),
-                             )
-                          ]
-                           );});}});}
-                       ), child: Text('POP')),
-                     )
-                ],
-              ),
-            ),
+            //                  ElevatedButton(onPressed: (){
+            //                    Navigator.of(context).pop();
+            //                  },
+            //                  child: Text('Ok'),
+            //                  )
+            //               ]
+            //                );});}});}
+            //            ), child: Text('POP')),
+            //          )
+                 ],
+               ),
+             ),
 
             Padding(
               padding: const EdgeInsets.all(20.0),
@@ -524,9 +527,17 @@ void saveData() async {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   ElevatedButton(onPressed:(){
+                    print(given);
+                    print(givenstr);
+                    givenstr=given.split(',');
+                    for(int i=0;i<givenstr.length;i++){  
+                      x= int.parse(givenstr[i]);                   
+                      Buffer.add(x);
+                      
+                    }
                    
                     calculate(); 
-                                      saveData();
+                    saveData();
                   Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (context) =>  SSTFOP(d,totalTime,avgTime,calculatedBuffer,Buffer)),(route)=>route.isActive);
                  }, 
                   child:Text('Calculate'))

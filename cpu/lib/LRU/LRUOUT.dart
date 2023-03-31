@@ -94,13 +94,13 @@ class LRUOUT extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Row(children: [    //  counting no of 'Hits'
+              child: Row(children: [    //  counting and displaying no of 'Hits'
                 Text('Total Hit:'+pageHits.toString(),style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18),),
         ],),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Row(children: [     //  counting no of 'Miss'
+              child: Row(children: [     //  counting and displaying no of 'Miss'
                 Text('Total Miss:'+pageFaults.toString(),style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18),),
         ],),
             ),

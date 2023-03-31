@@ -38,7 +38,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   sizer: ^2.0.15
   font_awesome_flutter: ^10.4.0
-  syncfusion_flutter_charts: ^20.4.52
+  syncfusion_flutter_charts: ^21.1.37
   url_launcher: ^6.1.10
   firebase_core: ^2.8.0
   cloud_firestore: ^4.4.5
