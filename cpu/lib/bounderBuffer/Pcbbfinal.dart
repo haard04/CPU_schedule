@@ -38,7 +38,7 @@ void saveData() async{
     print('Error adding strings to "srtn" collection in Firestore: $e');
   }
 
-  showDialog(
+  showDialog(       // dialogue box to show the saved entries of the produced and consumed item
                         context: context,
                         builder: (BuildContext context) {
                         return AlertDialog(
@@ -55,26 +55,26 @@ void saveData() async{
 
 
 }
-
-  void _produce() async {
+ //Synchronized method to produce items
+  void _produce() async {  
     producing = true;
     while (buffer.length >= int.parse(_buffersize)) {
-      await Future.delayed(Duration(milliseconds: 500));
+      await Future.delayed(Duration(milliseconds: 500)); //waits if buffer is full till it is not emptied to desired size
     }
     buffer.add(counter);
      
 
-    dataPCBB.add('Producer Produced '+counter.toString());
+    dataPCBB.add('Producer Produced '+counter.toString()); // saving the producer entries 
     counter++;
     setState(() {});
     producing = false;
   }
-
+//Synchronized method to consume items
   void _consume() async {
     while (buffer.isEmpty) {
-      await Future.delayed(Duration(milliseconds: 500));
+      await Future.delayed(Duration(milliseconds: 500)); //waits if buffer is empty till it is not filled to desired size
     }
-    dataPCBB.add('Consumer consumed '+buffer.first.toString());
+    dataPCBB.add('Consumer consumed '+buffer.first.toString()); // saving the consumer entries
     buffer.removeAt(0);
     setState(() {});
   }
@@ -82,7 +82,7 @@ void saveData() async{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(
+      appBar: AppBar(title: Text(         
         'PCBB',
         style: TextStyle(
           fontFamily: 'Pacifico',
@@ -289,7 +289,7 @@ void saveData() async{
 
       body: Container(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,     
           children: [
             SizedBox(height: 16),
             Padding(
@@ -315,7 +315,7 @@ void saveData() async{
               padding: const EdgeInsets.all(20.0),
               child: Row(
                 children: [
-                  Text('Buffer Size:',
+                  Text('Buffer Size:',              //text style for user friendly interface
                   style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),
                   ),
                   Expanded(
@@ -356,11 +356,11 @@ void saveData() async{
               children: [
                 ElevatedButton(
                   onPressed: producing ? null : _produce,
-                  child: Text('Produce'),
+                  child: Text('Produce'),     
                 ),
                 ElevatedButton(
                   onPressed: _consume,
-                  child: Text('Consume'),
+                  child: Text('Consume'),    
                 ),
               ],
             ),
@@ -378,7 +378,7 @@ void saveData() async{
                   ElevatedButton(onPressed: (){
                     saveData();
                   
-                  }, child: Text('Save')),
+                  }, child: Text('Save')), 
                 ],
               ),
             

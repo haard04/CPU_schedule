@@ -4,6 +4,14 @@ import 'package:sizer/sizer.dart';
 class PCBBINFO extends StatelessWidget {
   const PCBBINFO({Key? key}) : super(key: key);
 
+
+/*
+Informantion page for Producer Consumer Bounded Buffer   -> Explaining the Producer Consumer Bounded Buffer and understanding 
+                                                            what kind of problem Deadlock causes in the Operating Systems and 
+                                                            also understanding what is the Deadlock Situation.   
+*/
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

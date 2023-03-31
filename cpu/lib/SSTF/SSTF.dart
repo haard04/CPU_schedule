@@ -1,5 +1,5 @@
+// MAIN FILE OF "SSTF" Algorithm
 import 'dart:collection';
-//  d.add(dataschema(Buffer.elementAt(i), i));
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cpu/About.dart';
 import 'package:cpu/Home.dart';
@@ -47,13 +47,13 @@ double avgTime=0;
 ListQueue<int> finalQueue=ListQueue();
 
 
-
+// saving data to "FIREBASE DATABASE"
 void saveData() async {
   try {
-    // Get a reference to the Firestore collection named "srtn"
+    // Get a reference to the Firestore collection named "SSTF"
     CollectionReference srtnCollection = FirebaseFirestore.instance.collection('sstf/');
     
-    // Create a new document in the "srtn" collection and set its data
+    // Create a new document in the "SSTF" collection and set its data
     await srtnCollection.add({
       'Size': size,
       'Head':finalQueue.first,
@@ -64,9 +64,9 @@ void saveData() async {
       
     });
     
-    print('Strings added to "srtn" collection in Firestore');
+    print('Strings added to "sstf" collection in Firestore');
   } catch (e) {
-    print('Error adding strings to "srtn" collection in Firestore: $e');
+    print('Error adding strings to "sstf" collection in Firestore: $e');
   }
 }
 
@@ -77,7 +77,7 @@ void saveData() async {
 
 
   
-  
+  // Main Algorithm of "SSTF"
   void calculate(){
     setState(() {
       
@@ -87,7 +87,7 @@ void saveData() async {
       counter++;
       
       calculatedBuffer=Buffer;
-      inputQueue=Buffer.toList();
+      inputQueue=Buffer.toList();  // adding data to inputQueue in form of list
       int l=Buffer.length;
       int  min,x; 
       while((calculatedBuffer.isNotEmpty)){
@@ -107,16 +107,17 @@ void saveData() async {
         calculatedBuffer.remove(calculatedBuffer.elementAt(x));
         
     }
-    avgTime=totalTime/l;
+    avgTime=totalTime/l;  // calculathing avg time of sstf Algorithm
     
     });
     print(d);
+    // printing on terminal for debugging
     print('inputQueue'+inputQueue.toString());
     print('Cal Buffer'+calculatedBuffer.toString());
     print('Buffer'+Buffer.toString());
     
   }
-
+ // End of calculate function
 
 
   @override
@@ -538,6 +539,7 @@ void saveData() async {
                    
                     calculate(); 
                     saveData();
+              // Navigate to next(output) page
                   Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (context) =>  SSTFOP(d,totalTime,avgTime,calculatedBuffer,Buffer)),(route)=>route.isActive);
                  }, 
                   child:Text('Calculate'))
