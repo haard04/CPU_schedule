@@ -34,7 +34,7 @@ List<List> data=[];
  int pageFaults = 0;
   int pageHits =0;
   List<String> result=[];
-  String given='';
+ // String given='';
   List<String> givenstr=[];
 
 int totalTime=0;
@@ -125,6 +125,11 @@ void calculateLRU(ListQueue<int> Buffer, int frameCount) {
   final fieldText = TextEditingController();
   void clearText() {// Function to clear text
     fieldText.clear();
+  }
+
+  final frameText = TextEditingController();
+  void clearFrame() {// Function to clear text
+    frameText.clear();
   }
   Widget build(BuildContext context) {
     return Scaffold(
@@ -369,6 +374,7 @@ void calculateLRU(ListQueue<int> Buffer, int frameCount) {
                   SizedBox(
                     width: 120,
                     child: TextField(
+                      controller: frameText,
                       
                        onChanged: (value) {
                       setState(() {
@@ -377,6 +383,7 @@ void calculateLRU(ListQueue<int> Buffer, int frameCount) {
                         
                      
                       });
+                      
                     },
                     keyboardType: TextInputType.numberWithOptions(),
                     decoration: InputDecoration(
@@ -388,14 +395,14 @@ void calculateLRU(ListQueue<int> Buffer, int frameCount) {
                 ],
               ),
             ),
-            // Padding(
-            //   padding: const EdgeInsets.all(10.0),
-            //   child: Row(
-            //       children: [
-            //         Expanded(child: Text('Queue: '+Buffer.toString(),style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),))
-            //       ],
-            //   ),
-            // ),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Row(
+                  children: [
+                    Expanded(child: Text('Queue: '+Buffer.toString(),style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),))
+                  ],
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.fromLTRB(20,0,20,10),
               child: Row(
@@ -409,12 +416,12 @@ void calculateLRU(ListQueue<int> Buffer, int frameCount) {
                     ),
                   ),
                   SizedBox(
-                    width: 180,
+                    width: 80,
                     child: TextField(
                       
                        onChanged: (value) {
-                       // x=int.parse(value);
-                       given=value;
+                        x=int.parse(value);
+                       //given=value;
                         
                     },
                     controller: fieldText,
@@ -425,60 +432,60 @@ void calculateLRU(ListQueue<int> Buffer, int frameCount) {
               ),
                     ),
                   ),
-                  // ElevatedButton(
-                  //   onPressed:(){ setState(() {
-                  //       if(x>-1){
-                  //         print(frame);
-                  //       Buffer.add(x);
-                  //       // print(Buffer);
-                  //       clearText();
-                  //       }
-                  //       else{
+                  ElevatedButton(
+                    onPressed:(){ setState(() {
+                        if(x>-1){
+                          print(frame);
+                        Buffer.add(x);
+                        // print(Buffer);
+                        clearText();
+                        }
+                        else{
                           
-                  //         showDialog(
-                  //       context: context,
-                  //       builder: (BuildContext context) {
-                  //       return AlertDialog(
-                  //       content: Text('Please select Proper value'),
-                  //        actions: [
+                          showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                        return AlertDialog(
+                        content: Text('Please select Proper value'),
+                         actions: [
                           
-                  //          ElevatedButton(onPressed: (){
-                  //            Navigator.of(context).pop();
-                  //          },
-                  //          child: Text('Ok'),
-                  //          )
-                  //       ]
-                  //        );});
-                  //        }});
-                  //        },
-                  //    child: Text('ADD')),
+                           ElevatedButton(onPressed: (){
+                             Navigator.of(context).pop();
+                           },
+                           child: Text('Ok'),
+                           )
+                        ]
+                         );});
+                         }});
+                         },
+                     child: Text('ADD')),
 
 
-                  //    Padding(
-                  //      padding: const EdgeInsets.all(8.0),
-                  //      child: ElevatedButton(onPressed: (() {
-                  //        setState(() {
-                  //         if(Buffer.length>0){
-                  //           Buffer.removeLast();
-                  //         }
-                  //         else{
+                     Padding(
+                       padding: const EdgeInsets.all(8.0),
+                       child: ElevatedButton(onPressed: (() {
+                         setState(() {
+                          if(Buffer.length>0){
+                            Buffer.removeLast();
+                          }
+                          else{
                             
-                  //           showDialog(
-                  //         context: context,
-                  //         builder: (BuildContext context) {
-                  //         return AlertDialog(
-                  //         content: Text('Queue is Empty'),
-                  //          actions: [
+                            showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                          return AlertDialog(
+                          content: Text('Queue is Empty'),
+                           actions: [
                             
-                  //            ElevatedButton(onPressed: (){
-                  //              Navigator.of(context).pop();
-                  //            },
-                  //            child: Text('Ok'),
-                  //            )
-                  //         ]
-                  //          );});}});}
-                  //      ), child: Text('POP')),
-                  //    )
+                             ElevatedButton(onPressed: (){
+                               Navigator.of(context).pop();
+                             },
+                             child: Text('Ok'),
+                             )
+                          ]
+                           );});}});}
+                       ), child: Text('POP')),
+                     )
                 ],
               ),
             ),
@@ -486,7 +493,7 @@ void calculateLRU(ListQueue<int> Buffer, int frameCount) {
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                    (frame>0)?
@@ -495,10 +502,10 @@ void calculateLRU(ListQueue<int> Buffer, int frameCount) {
                   onPressed:()
                   
                   {
-                    givenstr=given.split(',');
-                    for(int i=0;i<givenstr.length;i++){
-                      Buffer.add(int.parse(givenstr[i]));
-                    }
+                    // givenstr=given.split(',');
+                    // for(int i=0;i<givenstr.length;i++){
+                    //   Buffer.add(int.parse(givenstr[i]));
+                    // }
                       calculateLRU(Buffer, frame);
                       saveData(); 
                       Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (context) =>  LRUOUT(frame,Buffer,pageFaults,pageHits,data,result)),(route)=>route.isActive);
@@ -506,6 +513,30 @@ void calculateLRU(ListQueue<int> Buffer, int frameCount) {
                       
                       child:Text('Calculate'))
                       :Text(''),
+
+                      ElevatedButton(onPressed:(){
+                        setState(() {
+                          frame =0;
+                         Buffer.clear();
+                         clearFrame();
+
+                            x=0;
+                          data=[];
+                            pageFaults = 0;
+                            pageHits =0;
+                            result=[];
+                          // String given='';
+                            givenstr=[];
+
+                          totalTime=0;
+                          avgTime=0;
+
+                          inputQueue=[];
+                        });
+                         
+
+                        }, 
+                        child: Text('Reset'))
                 ],
               ),
             )
