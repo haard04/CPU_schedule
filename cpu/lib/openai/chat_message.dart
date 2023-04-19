@@ -27,8 +27,8 @@ class ChatMessageWidget extends StatelessWidget {
                     backgroundColor: const Color.fromRGBO(16, 163, 127, 1),
                     child: Image.asset(
                       'assets/bot.png',
-                      color: Colors.white,
-                      scale: 1.5,
+                      //color: Colors.white,
+                      scale: 3,
                     ),
                   ),
                 )
