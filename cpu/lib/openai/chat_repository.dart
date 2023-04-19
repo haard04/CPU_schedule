@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart' ;
-import './constant.dart';
+import 'constant.txt';
 import 'package:http/http.dart' as http;
 
 Future<String> generateResponse(String prompt) async {
