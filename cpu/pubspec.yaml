@@ -44,6 +44,7 @@ dependencies:
   cloud_firestore: ^4.4.5
   upgrader: ^6.2.0
   collection: ^1.16.0
+  flutter_dotenv: ^5.0.2
 
 dev_dependencies:
   flutter_test:
