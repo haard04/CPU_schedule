@@ -10,9 +10,9 @@
 .history
 .svn/
 migrate_working_dir/
-lib//openai//constant.txt
-lib\\openai\\constant.txt
-*.constants.dart
+# lib//openai//constant.txt
+# lib\\openai\\constant.txt
+/lib/openai/constants.dart
 
 
 # IntelliJ related
