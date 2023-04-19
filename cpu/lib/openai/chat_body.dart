@@ -28,11 +28,11 @@ class _ChatPageState extends State<ChatPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-       // toolbarHeight: 100,
+        toolbarHeight: 100,
         title: const Padding(
           padding: EdgeInsets.all(8.0),
           child: Text(
-            "Queries",
+            "OpenAI's ChatGPT Flutter Example \n@ngjunya",
             maxLines: 2,
             textAlign: TextAlign.center,
           ),
@@ -120,7 +120,6 @@ class _ChatPageState extends State<ChatPage> {
     return Expanded(
       child: TextField(
         textCapitalization: TextCapitalization.sentences,
-        
         style: const TextStyle(color: Colors.white),
         controller: _textController,
         decoration: const InputDecoration(

@@ -27,9 +27,8 @@ class ChatMessageWidget extends StatelessWidget {
                     backgroundColor: const Color.fromRGBO(16, 163, 127, 1),
                     child: Image.asset(
                       'assets/bot.png',
-                      //color: Colors.black,
-                      scale: 2,
-                      
+                      color: Colors.white,
+                      scale: 1.5,
                     ),
                   ),
                 )
@@ -38,8 +37,6 @@ class ChatMessageWidget extends StatelessWidget {
                   child: const CircleAvatar(
                     child: Icon(
                       Icons.person,
-                      color: Colors.white,
-                      
                     ),
                   ),
                 ),
