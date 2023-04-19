@@ -10,6 +10,7 @@ import 'package:cpu/SRTN/card.dart';
 import 'package:cpu/SRTN/view.dart';
 import 'package:cpu/SSTF/SSTF.dart';
 import 'package:cpu/bounderBuffer/PCBB.dart';
+import 'package:cpu/openai/chat_body.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'dart:collection';
@@ -414,6 +415,17 @@ void _calculate() {
                 TextStyle(fontFamily: 'Pacifico', fontWeight: FontWeight.bold),
           ),
           actions: <Widget>[
+            Padding(
+      padding: EdgeInsets.only(right: 20.0),
+      child: GestureDetector(
+        onTap: (){
+          Navigator.push(context,MaterialPageRoute(builder: (conText) => ChatPage()),);
+        },
+        child: Icon(
+            Icons.help
+        ),
+      )
+    ),
           Padding(
       padding: EdgeInsets.only(right: 20.0),
       child: GestureDetector(

@@ -14,6 +14,7 @@ import 'package:cpu/SSTF/model.dart';
 import 'package:cpu/SSTF/output.dart';
 import 'package:cpu/bounderBuffer/PCBB.dart';
 import 'package:cpu/bounderBuffer/widget.dart';
+import 'package:cpu/openai/chat_body.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
@@ -142,7 +143,18 @@ void calculateLRU(ListQueue<int> Buffer, int frameCount) {
 
 
  
-        actions: <Widget>[     // navigates to the 'info' page
+        actions: <Widget>[ 
+          Padding(
+      padding: EdgeInsets.only(right: 20.0),
+      child: GestureDetector(
+        onTap: (){
+          Navigator.push(context,MaterialPageRoute(builder: (conText) => ChatPage()),);
+        },
+        child: Icon(
+            Icons.help
+        ),
+      )
+    ),    // navigates to the 'info' page
           Padding(
       padding: EdgeInsets.only(right: 20.0),
       child: GestureDetector(
