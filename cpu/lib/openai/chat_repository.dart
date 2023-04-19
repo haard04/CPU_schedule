@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:cpu/openai/constants.dart';
 
 Future<String> generateResponse(String prompt) async {
-  const apiKey = key1+key2+key3+key4+key5;
+  const apiKey = key1;
   print(apiKey);
 
   var url = Uri.https("api.openai.com", "/v1/completions");
