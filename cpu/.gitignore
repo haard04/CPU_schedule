@@ -10,7 +10,7 @@
 .history
 .svn/
 migrate_working_dir/
-lib\openai\constant.dart
+lib%5Copenai%5Cconstant.dart
 
 
 # IntelliJ related
