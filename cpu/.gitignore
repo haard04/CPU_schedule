@@ -1,6 +1,7 @@
 # Miscellaneous
 *.class
 *.log
+lib/openai/constant.dart
 *.pyc
 *.swp
 .DS_Store
@@ -9,7 +10,7 @@
 .history
 .svn/
 migrate_working_dir/
-.\lib\openai\constant.dart
+
 
 # IntelliJ related
 *.iml
