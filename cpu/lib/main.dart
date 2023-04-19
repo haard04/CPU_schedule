@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-void main() async {
+Future main() async {
    WidgetsFlutterBinding.ensureInitialized();
-  await dotenv.load(fileName: ".env");
+  //await dotenv.load(fileName: ".env");
   
   await Firebase.initializeApp();
   runApp(MyApp(), );

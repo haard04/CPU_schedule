@@ -1,10 +1,11 @@
 import 'dart:convert';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart' ;
 import './constant.dart';
 import 'package:http/http.dart' as http;
 
 Future<String> generateResponse(String prompt) async {
-  final apiKey = dotenv.env["apiSecretKey"];
+
+  final apiKey =  API_key;
 
   var url = Uri.https("api.openai.com", "/v1/completions");
   final response = await http.post(
