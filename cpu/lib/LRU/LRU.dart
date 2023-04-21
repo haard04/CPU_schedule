@@ -13,6 +13,7 @@ import 'package:cpu/SSTF/SSTF.dart';
 import 'package:cpu/SSTF/model.dart';
 import 'package:cpu/SSTF/output.dart';
 import 'package:cpu/bounderBuffer/PCBB.dart';
+import 'package:cpu/bounderBuffer/Pcbbfinal.dart';
 import 'package:cpu/bounderBuffer/widget.dart';
 import 'package:cpu/openai/chat_body.dart';
 import 'package:flutter/material.dart';
@@ -264,7 +265,7 @@ void calculateLRU(ListQueue<int> Buffer, int frameCount) {
                         fontSize: 20.sp,
                         fontWeight: FontWeight.bold
                       ),
-                    )),onTap:() {Navigator.push(context,MaterialPageRoute(builder: (context) =>  PCBB()),);},)
+                    )),onTap:() {Navigator.push(context,MaterialPageRoute(builder: (context) =>  ProducerConsumerScreenMonitor()),);},)
                   ],
                 ),
               ),

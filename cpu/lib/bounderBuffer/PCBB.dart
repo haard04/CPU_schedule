@@ -7,6 +7,7 @@ import 'package:cpu/LRU/LRU.dart';
 import 'package:cpu/SRTN/SRTN.dart';
 import 'package:cpu/SSTF/SSTF.dart';
 import 'package:cpu/bounderBuffer/PCBBINFO.dart';
+import 'package:cpu/bounderBuffer/Pcbbfinal.dart';
 import 'package:cpu/bounderBuffer/widget.dart';
 import 'package:cpu/openai/chat_body.dart';
 import 'package:flutter/material.dart';
@@ -46,7 +47,7 @@ class _PCBBState extends State<PCBB> {
     dataPCBB=[];
     
     Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-                              builder: (context) => PCBB()),
+                              builder: (context) => ProducerConsumerScreenMonitor()),
                               (route) => route.isFirst,
                               );
                       
@@ -206,7 +207,7 @@ class _PCBBState extends State<PCBB> {
                         fontSize: 20.sp,
                         fontWeight: FontWeight.bold
                       ),
-                    )),onTap:() {Navigator.push(context,MaterialPageRoute(builder: (context) =>  PCBB()),);},)
+                    )),onTap:() {Navigator.push(context,MaterialPageRoute(builder: (context) =>  ProducerConsumerScreenMonitor()),);},)
                   ],
                 ),
               ),

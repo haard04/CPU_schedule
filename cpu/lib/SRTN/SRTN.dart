@@ -10,6 +10,7 @@ import 'package:cpu/SRTN/card.dart';
 import 'package:cpu/SRTN/view.dart';
 import 'package:cpu/SSTF/SSTF.dart';
 import 'package:cpu/bounderBuffer/PCBB.dart';
+import 'package:cpu/bounderBuffer/Pcbbfinal.dart';
 import 'package:cpu/openai/chat_body.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -533,7 +534,7 @@ void _calculate() {
                         fontSize: 20.sp,
                         fontWeight: FontWeight.bold
                       ),
-                    )),onTap:() {Navigator.push(context,MaterialPageRoute(builder: (context) =>  PCBB()),);},)
+                    )),onTap:() {Navigator.push(context,MaterialPageRoute(builder: (context) =>  ProducerConsumerScreenMonitor()),);},)
                   ],
                 ),
               ),

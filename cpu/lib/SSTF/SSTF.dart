@@ -249,7 +249,7 @@ void saveData() async {
                         fontSize: 20.sp,
                         fontWeight: FontWeight.bold
                       ),
-                    )),onTap:() {Navigator.push(context,MaterialPageRoute(builder: (context) =>  PCBB()),);},)
+                    )),onTap:() {Navigator.push(context,MaterialPageRoute(builder: (context) =>  pr()),);},)
                   ],
                 ),
               ),

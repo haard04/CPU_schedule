@@ -3,6 +3,7 @@ import 'package:cpu/LRU/LRU.dart';
 import 'package:cpu/SRTN/SRTN.dart';
 import 'package:cpu/SSTF/SSTF.dart';
 import 'package:cpu/bounderBuffer/PCBB.dart';
+import 'package:cpu/bounderBuffer/Pcbbfinal.dart';
 import 'package:cpu/openai/chat_body.dart';
 import 'package:cpu/profileCard.dart';
 import 'package:flutter/material.dart';
@@ -125,7 +126,7 @@ class aboutPage extends StatelessWidget {
                         fontSize: 20.sp,
                         fontWeight: FontWeight.bold
                       ),
-                    )),onTap:() {Navigator.push(context,MaterialPageRoute(builder: (context) =>  PCBB()),);},)
+                    )),onTap:() {Navigator.push(context,MaterialPageRoute(builder: (context) =>  ProducerConsumerScreenMonitor()),);},)
                   ],
                 ),
               ),
