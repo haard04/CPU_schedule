@@ -10,6 +10,7 @@ import 'package:cpu/SSTF/SSTFINFO.dart';
 import 'package:cpu/SSTF/model.dart';
 import 'package:cpu/SSTF/output.dart';
 import 'package:cpu/bounderBuffer/PCBB.dart';
+import 'package:cpu/bounderBuffer/Pcbbfinal.dart';
 import 'package:cpu/bounderBuffer/widget.dart';
 import 'package:cpu/openai/chat_body.dart';
 import 'package:flutter/material.dart';
@@ -249,7 +250,7 @@ void saveData() async {
                         fontSize: 20.sp,
                         fontWeight: FontWeight.bold
                       ),
-                    )),onTap:() {Navigator.push(context,MaterialPageRoute(builder: (context) =>  pr()),);},)
+                    )),onTap:() {Navigator.push(context,MaterialPageRoute(builder: (context) =>  ProducerConsumerScreenMonitor()),);},)
                   ],
                 ),
               ),
